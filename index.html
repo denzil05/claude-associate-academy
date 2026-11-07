@@ -1145,7 +1145,7 @@ window.CA.courses = (window.CA.courses || []).concat([
   id: "c3", num: 3,
   title: "Evaluating & Validating Output",
   tagline: "From plausible to verified",
-  blurb: "Discernment and diligence: the three evaluation references, the four failure patterns, six grounding techniques, and the format reliability ladder.",
+  blurb: "Discernment and diligence: the three evaluation references, the official failure patterns, six grounding techniques, and the format reliability ladder.",
   lessons: [
 
   {
@@ -1191,22 +1191,23 @@ window.CA.courses = (window.CA.courses || []).concat([
 
   {
     id: "c3l2", title: "Hallucinations, Inconsistencies & Bias", time: 10,
-    sub: "Four failure patterns and the signals that expose them",
+    sub: "The failure patterns, and the signals that expose them",
     objectives: [
-      "Recognise the four output failure patterns",
+      "Recognise the official output failure patterns",
       "Apply the fabricated-statistic checklist",
       "Detect confirmation bias and capability hallucinations"
     ],
     blocks: [
       {t:"p", html:"The core difficulty: Claude writes with the <strong>same fluency whether it is right or wrong</strong>. Confidence is a property of the prose, not evidence of accuracy. Never let a well-formed sentence do the work of a verified one."},
 
-      {t:"h", html:"Four patterns"},
-      {t:"table", head:["Pattern","What it looks like","Detection"],
+      {t:"h", html:"The failure patterns (official list)"},
+      {t:"table", head:["Pattern","What it looks like","How to catch it"],
        rows:[
-        ["<strong>Hallucination</strong>","Plausible claims with no support: invented statistics, dates, names, quotes, citations","Ask for the source; check it exists and says what is claimed"],
-        ["<strong>Inconsistency</strong>","Long documents contradict themselves between sections","Ask Claude to list key claims as a numbered list; check any pair that conflicts"],
-        ["<strong>Bias</strong>","Output skews toward the answer the prompt implied","Ask for arguments for <em>and</em> against; ask it to challenge its own recommendation"],
-        ["<strong>Completeness failure</strong>","Finds several real findings but omits the most important one","Compare against your own domain knowledge and the original brief"]
+        ["<strong>Hallucination</strong>","Three forms: <strong>plausible-but-unsupported claims</strong> (the most dangerous — nothing looks wrong); <strong>fabricated specifics</strong> (invented statistics, dates, names, quotes, citations); <strong>confident tone masking uncertainty</strong> (Claude rarely hedges in proportion to how sure it is)","Ask for the source; check it exists and says what is claimed. 'The precision is the tell.'"],
+        ["<strong>Internal contradictions</strong>","Long documents contradict themselves between sections ($2B on page 2, $2.6B on page 8)","Run a consistency pass: have Claude list key claims as a numbered list; check any pair that conflicts"],
+        ["<strong>Confirmation bias</strong>","Output leans toward the answer your prompt implied — it 'agrees a little too readily'","Ask for arguments for and against; ask it to challenge its own recommendation"],
+        ["<strong>Completeness failure</strong>","Several real findings, but the most important one is missing — failures concentrate where attention is lowest","A separate check against your own requirements and domain knowledge"],
+        ["<strong>Capability hallucination</strong>","Claude says it did something it can't or didn't do ('I've emailed your team')","Treat any claimed external action as unverified until you confirm it"]
        ]},
 
       {t:"h", html:"Confirmation bias"},
@@ -1229,7 +1230,7 @@ window.CA.courses = (window.CA.courses || []).concat([
     ],
     keyPoints: [
       "Fluency is not evidence; confidence is not accuracy.",
-      "Four patterns: hallucination, inconsistency, bias, completeness failure.",
+      "Patterns: hallucination (unsupported, fabricated specifics, overconfident tone), contradictions, confirmation bias, completeness failure, capability hallucination.",
       "Numbered claim list exposes internal contradictions.",
       "Ask for the counter-case to defuse confirmation bias.",
       "Capability hallucinations: verify side effects externally.",
@@ -1248,7 +1249,7 @@ window.CA.courses = (window.CA.courses || []).concat([
     blocks: [
       {t:"p", html:"Grounding means anchoring the answer to supplied or authoritative material so that invention has nowhere to live. There are six techniques, and every one of them is implemented <strong>in the prompt</strong> — not as a product setting."},
       {t:"callout", variant:"exam", title:"Exam trap — Citations",
-       body:"Anthropic's native <strong>Citations</strong> capability is an API/developer feature. There is <strong>no 'citations mode' button</strong> in claude.ai. If an answer option tells you to 'turn on citations in settings', it is wrong."},
+       body:"Anthropic's native <strong>Citations</strong> capability is an API/developer feature. There is <strong>no 'citations mode' button</strong> in claude.ai. If an answer option tells you to 'turn on citations in settings', it is wrong. Web search and Research do return source links automatically — those are <strong>grounded</strong> citations you can open. Citations Claude writes from training memory alone look just as confident, so check them independently."},
 
       {t:"h", html:"The six techniques"},
       {t:"ol", items:[
@@ -1293,14 +1294,14 @@ window.CA.courses = (window.CA.courses || []).concat([
         ["<strong>Regulatory exposure</strong>","Is a law, policy or contract involved?","Legal opinions, policy compliance assessments, contract terms, data privacy and security statements — always a qualified human reviewer."]
        ]},
 
-      {t:"h", html:"Never released without human validation"},
+      {t:"h", html:"Do-not-ship-without-review list (official)"},
+      {t:"p", html:"Decide this list <strong>in advance</strong> and treat it as fixed:"},
       {t:"ul", items:[
-        "Final client deliverables",
-        "Business-critical financial calculations",
-        "Regulated or sensitive information",
-        "Public statements",
-        "Legal communications"
-      ]},
+        "Final <strong>client deliverables</strong>",
+        "<strong>Audit-critical or financially material calculations</strong>",
+        "<strong>Regulated, confidential or highly sensitive data</strong>",
+        "<strong>Public or legal communications</strong> with lasting consequences"
+       ]},
       {t:"callout", variant:"principle", title:"Tools reduce risk — they do not eliminate it",
        body:"No combination of prompt engineering, grounding, model selection or configuration removes the need for human judgement on high-stakes work. A prompt cannot certify itself, and a citation is not a control."},
 
@@ -1308,7 +1309,7 @@ window.CA.courses = (window.CA.courses || []).concat([
     ],
     keyPoints: [
       "Four thresholds: stakes, reversibility, audience, regulatory exposure.",
-      "Five categories never ship unvalidated: client deliverables, critical financials, regulated data, public statements, legal communications.",
+      "Never ship without review: client deliverables, material financial calculations, regulated/confidential data, public or legal communications.",
       "The approver owns the output, not the tool.",
       "Risk is reduced by tooling, never eliminated."
     ]
@@ -1333,7 +1334,8 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"table", head:["Audience","Leads with","Content"],
        rows:[
         ["<strong>Executive</strong>","The <em>so what</em> — impact and recommendation","Churn up 12% QoQ due to onboarding friction; redesign onboarding in Q1, projected 8% retention gain. Support is brief."],
-        ["<strong>Working team</strong>","The <em>how</em> — methodology and action items","Cohort comparison Q2 vs Q3; legacy flow churned 2.4x; named owners and timelines."]
+        ["<strong>Working team</strong>","The <em>how</em> — methodology and action items","Cohort comparison Q2 vs Q3; legacy flow churned 2.4x; named owners and timelines."],
+        ["<strong>External (clients, partners)</strong>","What to disclose, and how it is framed","Clean and polished; only the findings you are cleared to share"]
        ]},
       {t:"callout", variant:"principle", title:"Facts identical, framing changes",
        body:"The numbers do not move between versions. What moves is what comes first, how much method is shown, and whether the document ends in a decision or in a task list."}
@@ -1403,7 +1405,7 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"h", html:"Strengthening the workflow"},
       {t:"ul", items:[
         "<strong>Use a Project for recurring work.</strong> RFPs recur; the background is stable; the format should be consistent. Put prior proposals in the knowledge base, define the extraction format in project instructions, and use a Skill for repeatable formatting.",
-        "<strong>Watch the knowledge capacity limit.</strong> A 40-page RFP plus prior proposals can exceed what a Project can hold — trim the oldest or least relevant material rather than letting retrieval degrade.",
+        "<strong>Keep the knowledge base lean.</strong> Remove superseded proposals and duplicate versions so retrieval finds the right material — three versions of one document invite Claude to cite the wrong one.",
         "<strong>Two passes, not one.</strong> Pass 1 extracts (labels, sections, quotes, clarification flags). Pass 2 pressure-tests: which requirements are ambiguous, could be interpreted two ways by two team members, or are implied rather than stated."
       ]},
 
@@ -1494,13 +1496,13 @@ window.CA.courses = (window.CA.courses || []).concat([
       ]},
 
       {t:"callout", variant:"warn", title:"Know when to escalate",
-       body:"An Artifact runs <strong>client-side on data supplied in the conversation</strong>. There is no live data source and it will not refresh. It is a snapshot tool, not a reporting system. Escalate when it becomes something others depend on: reliability requirements, security review, system integrations, multi-team use, daily operational dependence.<br><br><strong>The warning sign is dependency.</strong>"}
+       body:"In this example the dashboard is built from <strong>data you supplied in the conversation</strong> — a snapshot, not a reporting system. (Today artifacts can also pull live data from connected apps, using each viewer's own access, but they are still not production systems.) <strong>Escalate</strong> when it becomes something others depend on: reliability requirements, security review, system integrations, multi-team use, daily operational dependence. At that point it has <strong>outgrown Associate scope</strong> — bring in Developer or Architect expertise. <strong>The warning sign is dependency.</strong>"}
     ],
     keyPoints: [
       "Iterate: generate, prototype, feedback, refine — inside a Project.",
       "Machine-readable data is the precondition; screenshots fail.",
       "Describe the change, not the code.",
-      "Artifacts are client-side snapshots with no live refresh.",
+      "An Artifact is not a production system; dependency means escalate to Developer/Architect expertise.",
       "Dependency is the signal to escalate to real engineering."
     ]
   },
@@ -1629,7 +1631,7 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"h", html:"The four in-project mechanisms"},
       {t:"table", head:["Mechanism","Holds","Examples","Behaviour"],
        rows:[
-        ["<strong>Project instructions</strong>","Behaviour applied to every conversation","Writing style and tone, formatting rules, verification requirements, citation practice","Applied automatically; project-level instructions <strong>take precedence</strong> over conflicting account-level preferences inside that Project"],
+        ["<strong>Project instructions</strong>","Behaviour applied to every conversation","Writing style and tone, formatting rules, verification requirements, citation practice","Applied automatically to every chat in that Project, alongside your personal instructions. (Organisation instructions set by Owners take precedence over individual ones.)"],
         ["<strong>Knowledge base</strong>","Facts and reference material","Policies, brand guidelines, process docs, reference manuals, templates","Claude <strong>searches and retrieves relevant excerpts</strong> — it does not load the whole KB into context every turn"],
         ["<strong>Skills</strong>","A repeatable procedure","Formatting reports, processing spreadsheets, building presentations, standard workflows","Account-level, reusable across Projects, subject to scope and admin settings"],
         ["<strong>Scoped memory</strong>","Continuity within a Project","Stakeholder names, project decisions, long-running preferences, earlier-conversation context","Project-scoped by design; Claude-generated and user-editable; not perfect recall"]
@@ -1656,8 +1658,8 @@ window.CA.courses = (window.CA.courses || []).concat([
     ],
     keyPoints: [
       "Instructions = behaviour. Knowledge base = facts. Skills = procedures. Memory = continuity.",
-      "Project instructions override conflicting account-level preferences inside that Project.",
-      "The KB is searched, not fully loaded — over-uploading degrades recall and gets blamed on prompting.",
+      "Project instructions apply in that Project, alongside your personal instructions; organisation instructions win over individual ones",
+      "The KB is searched, not fully loaded — duplicate, stale or irrelevant files lead to wrong answers that get blamed on prompting.",
       "Memory is project-scoped by design and user-editable.",
       "Classify before you configure."
     ]
@@ -1690,7 +1692,7 @@ window.CA.courses = (window.CA.courses || []).concat([
 
       {t:"h", html:"Common challenges"},
       {t:"ul", items:[
-        "<strong>Wrong connector path.</strong> Connect from the organisation's approved connector list — not by pasting an arbitrary custom MCP server URL found elsewhere. Admins can allowlist and block; if unsure, ask the workspace admin.",
+        "<strong>Wrong connector path (look-alikes).</strong> The obvious 'add connector' path may lead to a <strong>public directory</strong> instead of your organisation's <strong>vetted</strong> connectors, and a pasted custom MCP server URL bypasses review entirely. Use the approved list; admins can allowlist and block. If unsure, ask the workspace admin.",
         "<strong>Boundary confusion.</strong> Users assume malfunction when the connector has simply reached the limit of its permitted capabilities. Diagnosis, not escalation."
       ]},
       {t:"callout", variant:"tip", title:"How to read the classic exam stem",
@@ -1753,7 +1755,7 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"p", html:"Configuration is not permanent. It evolves with processes, documents and priorities. Without maintenance, a well-designed Project <strong>gradually</strong> produces lower quality — and because the decline is gradual, it is almost always misdiagnosed as a prompting problem."},
 
       {t:"h", html:"Cadence"},
-      {t:"p", html:"There is no fixed rule that monthly is correct for every Project. Match the cadence to how often the underlying documents and processes change, and add <strong>event-driven reviews</strong>: fiscal year rollover, policy reissue, team change. A monthly default is reasonable; a trigger event always earns an extra review."},
+      {t:"p", html:"The official course recommends a <strong>monthly pass for active Projects</strong>: do the instructions match the current process? Are superseded documents removed? Are the right Skills enabled? Add extra reviews on <strong>trigger events</strong> — fiscal-year rollover, policy reissue, team change. The warning sign you waited too long: <strong>quality slipping for no visible reason</strong>."},
 
       {t:"h", html:"What decays, element by element"},
       {t:"table", head:["Element","Decay","Fix"],
@@ -1775,12 +1777,12 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"ul", items:[
         "A configured Project reduces variance — it does <strong>not</strong> remove the need for judgement or verification.",
         "Never put secrets, credentials or regulated personal data into instructions, knowledge or memory. These are configuration surfaces, not secure storage.",
-        "A configured Project does <strong>not</strong> grant autonomous action. Claude acts within a conversation when prompted — configuration changes behaviour, not initiative."
+        "Configuration changes behaviour; it does <strong>not</strong> authorise Claude to act on its own. Anything that runs unattended (for example a scheduled task) is set up deliberately and still needs review."
       ]}
     ],
     keyPoints: [
       "Without maintenance, quality degrades gradually — this is drift.",
-      "Match cadence to change frequency, plus event-driven reviews (fiscal rollover).",
+      "Official cadence: a monthly pass for active Projects, plus reviews on trigger events.",
       "Stale instruction metrics cause silently wrong output.",
       "Check Skill currency before blaming the prompt.",
       "Memory: review, edit, delete; export as a backup before a major change; reset if it misleads.",
@@ -1831,9 +1833,9 @@ window.CA.courses = (window.CA.courses || []).concat([
        body:"Inappropriate is <strong>not</strong> 'high-risk work that needs more review'. It is work where the <strong>decision itself</strong> cannot be delegated at all. 'Appropriate with human review' is high-risk work that remains permissible because a qualified human makes the call."},
 
       {t:"h", html:"What makes a review gate valid"},
-      {t:"p", html:"'Human review' is a phrase until it is specified. A functioning gate defines five things:"},
+      {t:"p", html:"'Human review' is a phrase until it is specified. The official course: <strong>'the gate is the classification'</strong>. A defined gate states <strong>who</strong> reviews (the role with accountability, not whoever is free), <strong>what</strong> they check, and <strong>when</strong> (before use). If you can't state these, it is not ready to run. Good practice adds two more, which make the gate auditable:"},
       {t:"ol", items:[
-        "<strong>Who</strong> reviews — a named role, not 'someone'.",
+        "<strong>Who</strong> reviews — the accountable role, not 'someone' or whoever is free.",
         "<strong>What</strong> is reviewed — accuracy, bias, completeness, compliance.",
         "<strong>When</strong> — <em>before</em> use, not after.",
         "<strong>How it is evidenced</strong> — sign-off, ticket, version note.",
@@ -1856,7 +1858,7 @@ window.CA.courses = (window.CA.courses || []).concat([
       "The human-element criterion can override the others.",
       "Three classifications: fully appropriate, human review, inappropriate.",
       "Inappropriate means the decision cannot be delegated at all.",
-      "A valid gate defines who, what, when, how evidenced, and rejection handling."
+      "A defined gate states who, what and when (official core); add how it is evidenced and what happens on rejection."
     ]
   },
 
@@ -1876,7 +1878,7 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"h", html:"Three-part trust evaluation"},
       {t:"table", head:["Part","Question","Judgement"],
        rows:[
-        ["<strong>1. Source</strong>","Who published it?","Organisation or approved vendor → fine. Known third party → review before enabling. Unknown publisher or unclear origin → escalate or decline."],
+        ["<strong>1. Source</strong>","Who published it?","Anthropic or organisation-approved → lower risk. Another internal team's Skill → internal is <strong>not</strong> the same as vetted; confirm what it accesses and that it matches current policy. Known third party → review before enabling. Unknown publisher, or one a colleague found on a public forum → escalate or decline."],
         ["<strong>2. Reach</strong>","What can it access, and what can it <em>do</em> with that access?","It inherits the session's <strong>visibility</strong> (what it can see) and separately its <strong>capability</strong> (transform, save, transmit). Read plus write to sensitive data is far riskier than read alone."],
         ["<strong>3. Appropriateness</strong>","Is this the only capability the task needs?","<strong>Least privilege.</strong> A document-formatting Skill should not need access to an entire Drive. Permissions that exceed the task → escalate or decline."]
        ]},
@@ -1888,7 +1890,7 @@ window.CA.courses = (window.CA.courses || []).concat([
         "<strong>Escalate</strong> — useful but needs security or governance review.",
         "<strong>Decline</strong> — source unvalidated, or access disproportionate to the task."
       ]},
-      {t:"p", html:"Example: a Document Formatting Skill from a trusted internal source → enable. An 'Analytics Booster' from an unknown publisher requesting broad access → escalate or decline."},
+      {t:"p", html:"Example: Anthropic's document-formatting Skill → enable. An 'Analytics Booster' from an unknown publisher requesting broad access → escalate or decline."},
 
       {t:"h", html:"Prompt injection"},
       {t:"callout", variant:"warn", title:"The single most common real-world governance failure",
@@ -1916,8 +1918,8 @@ window.CA.courses = (window.CA.courses || []).concat([
     ],
     blocks: [
       {t:"p", html:"Before uploading anything, identify its sensitivity. This is one of the highest-value governance habits, and it costs about ten seconds."},
-      {t:"callout", variant:"exam", title:"It is a course model, not a standard",
-       body:"Green / Yellow / Red is an <strong>illustrative model</strong> — not an Anthropic taxonomy and not an industry standard. You are expected to map it onto your organisation's labels, e.g. Public / Internal / Confidential / Restricted."},
+      {t:"callout", variant:"exam", title:"The official course's data model",
+       body:"Green / Yellow / Red is the data-sensitivity model the official course teaches — expect exam questions phrased with it. It is not a product setting or an industry standard; map it onto your organisation's labels, e.g. Public / Internal / Confidential / Restricted. <strong>Classify before you upload. Unsure between two tiers → treat it as the more sensitive one, and ask before uploading.</strong>"},
 
       {t:"table", head:["Tier","Contents","Action"],
        rows:[
@@ -1942,8 +1944,8 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"table", head:["Control","What it protects","What it does not"],
        rows:[
         ["<strong>Code execution sandbox</strong>","The host system, from code execution. Isolated, session-scoped; uploaded files available for the session; outputs generated there","The <strong>data</strong>. Red-tier content is still Red once uploaded — sandboxing does not downgrade sensitivity. Review file <em>contents</em>, not the filename"],
-        ["<strong>Memory controls</strong>","Gives you view / edit / delete, and per-project scoping where available","Automatic exclusion. Behaviour differs by plan and admin config. If sensitive information entered memory, check and clear it"],
-        ["<strong>Incognito mode</strong>","Prevents the session appearing in memory and chat history","Organisational retention requirements. Conversation is not saved, so you cannot retrieve it later — which matters when a record of an AI-assisted decision is itself a compliance requirement. Enterprise logging and audit obligations continue independently"]
+        ["<strong>Memory controls</strong>","View, edit and delete what Claude remembers; each Project has its own memory; turn Memory off for one chat. Org-level controls: Enterprise Owners / Primary Owners (official: Team plans have none)","Whether the data was allowed in the first place. Behaviour differs by plan and admin config. If sensitive information entered memory, check and clear it"],
+        ["<strong>Incognito mode</strong>","Keeps the chat out of memory and your chat history. Only outside Projects","Organisational retention (kept 30 days by default, longer under Enterprise retention) and Team/Enterprise data exports. You can't reopen it later — a problem when a record of an AI-assisted decision is itself required. Memory exclusion and data retention are <strong>separate controls</strong>"]
        ]},
       {t:"callout", variant:"principle", title:"Incognito does not make data safe",
        body:"The first question is always: <em>is this information approved for use with Claude?</em> Only after that is answered do features like Incognito become relevant. Privacy features change where a record lives; they do not change whether the data was permitted."}
@@ -2120,7 +2122,7 @@ window.CA.courses = (window.CA.courses || []).concat([
        strong:"<strong>Captured improvement.</strong> A marketer notices campaign briefs always omit the target audience and bury the call to action. They update Project instructions: always state the target audience in the first section, place the CTA in its own closing section.<br><br>Future briefs improve automatically; every future user benefits without knowing why."},
 
       {t:"callout", variant:"principle", title:"The rule of more than twice",
-       body:"If you are fixing the same thing <strong>more than twice</strong>, it belongs in configuration — not in your head, and not in your clipboard."}
+       body:"If you are fixing the same thing <strong>more than twice</strong>, it belongs in configuration — not in your head, and not in your clipboard. The official test: <strong>will this same correction be needed again, by me or someone else?</strong> If yes, configure it. (Memory is not the place for team fixes: it is per-user and best-effort.)"}
     ],
     keyPoints: [
       "Convert reactions into specific, transferable actions.",
@@ -2163,7 +2165,7 @@ window.CA.courses = (window.CA.courses || []).concat([
         "Create a formatting Skill.",
         "Add verification instructions to the Project."
       ]},
-      {t:"p", html:"Result: roughly 25 minutes, standardised formatting, fewer revisions. Note the pattern — <strong>each friction type maps to a specific surface</strong>: repetition → KB, corrections → instructions, variability → shared Skill."},
+      {t:"p", html:"Result: roughly 25 minutes, standardised formatting, fewer revisions. Note the official mapping: the background is <strong>reference</strong> → knowledge base; the format is a <strong>procedure</strong> → Skill; the verification step is a <strong>rule</strong> → standing instruction. Friction signals point the same way: repetition → saved context or instructions; repeated corrections → a configuration change; variability between people → a shared Skill or knowledge base."},
       {t:"callout", variant:"warn", title:"Report numbers honestly",
        body:"Metrics matter — time saved, reduction in revision cycles, consistency, quality. Without measurement you cannot prove value. But before/after figures in training material are <strong>illustrative, not benchmarks</strong>. Do not quote training examples as expected savings."}
     ],
@@ -2196,7 +2198,7 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"timeline", items:[
         ["1 · Select the right capability","Model and entry point chosen as a capability/cost/latency trade-off — not 'pick the newest'."],
         ["2 · Structured prompts","Five components, decomposition, iteration, task-type fit."],
-        ["3 · Evaluate and validate","Three references, four failure patterns, six grounding techniques, human review."],
+        ["3 · Evaluate and validate","Three references, the official failure patterns, six grounding techniques, human review."],
         ["4 · Integrate into workflows","Requirements, synthesis vs calculation, iterative prototyping, delegation mapping."],
         ["5 · Configure reusable environments","Instructions, knowledge, Skills, memory, connectors."],
         ["6 · Govern responsibly","Use-case classification, Skill trust, data sensitivity, escalation, ethics."],
@@ -2244,7 +2246,7 @@ window.CA.courses = (window.CA.courses || []).concat([
       "Plan a revision routine that targets weak areas"
     ],
     blocks: [
-      {t:"p", html:"The Associate certification covers using, evaluating, configuring and governing Claude within a professional workflow. It does <strong>not</strong> cover developer-level work — building an MCP server, for example. The expected behaviour is to <strong>recognise the boundary and escalate</strong> to someone with Developer-level certification or equivalent skills."},
+      {t:"p", html:"The Associate certification covers using, evaluating, configuring and governing Claude within a professional workflow. It does <strong>not</strong> cover developer-level work — building an MCP server, for example. The expected behaviour is to <strong>recognise the boundary and escalate</strong>: API integration, agents and tool building → <strong>Claude Developer</strong>; enterprise architecture and governance at scale → <strong>Claude Architect</strong>. A solution others depend on as infrastructure → escalate."},
       {t:"callout", variant:"exam", title:"Likely exam framing",
        body:"Expect scenario questions where the correct answer is 'recognise this is outside your scope and route it appropriately' rather than attempting the technical work."},
       {t:"h", html:"What we know about the exam"},
@@ -2262,7 +2264,7 @@ window.CA.courses = (window.CA.courses || []).concat([
        ]},
       {t:"callout", variant:"warn", title:"Date-sensitive material",
        body:"Those two dates matter more than any other fact in this app. If you sit on or after 7 December 2026, compare these notes against the new guide before trusting the detail — including the domain weights."},
-      {t:"p", html:"Everything the notes do not capture is marked <strong>verify</strong> on the Exam Blueprint page, and nothing in this app guesses at it."}
+      {t:"p", html:"These exam facts come from the official exam guide (v1.0, July 2026) and Anthropic's registration page. The <strong>Exam blueprint</strong> page has the same details."}
     ],
     keyPoints: [
       "Associate scope excludes developer-level work such as building an MCP server.",
@@ -2559,8 +2561,8 @@ window.CA.courses = (window.CA.courses || []).concat([
         "<strong>Outlook:</strong> beta, installed separately from the other add-ins.",
         "<strong>Chrome:</strong> generally available. On by default for Pro, Max and Team; <strong>off by default on Enterprise</strong> until an admin turns it on; <strong>not available on Free</strong>. Use it for low-risk tasks on trusted sites — it asks permission before high-risk actions like purchases or sharing personal data, and financial-services and adult sites are blocked by default."
        ]},
-      {t:"callout", variant:"exam", title:"Defaults that get tested",
-       body:"Chrome: <strong>on</strong> for Pro/Max/Team, <strong>off</strong> for Enterprise (admin enables), <strong>absent</strong> on Free. Design/Slides/Docs: on by default for Pro/Max/Team, <strong>off by default on Enterprise</strong> until an admin enables them in Organization settings → Artifacts."},
+      {t:"callout", variant:"exam", title:"Defaults that get tested (course version)",
+       body:"Chrome: <strong>on</strong> for Pro/Max/Team, <strong>off</strong> for Enterprise (admin enables), <strong>absent</strong> on Free. Design/Slides/Docs: on by default for Pro/Max/Team, <strong>off by default on Enterprise</strong> until an Owner enables them. (Chrome on Enterprise has since changed — see the green note at the end of this lesson.)"},
 
       {t:"h", html:"Three shapes of work in the desktop app"},
       {t:"table", head:["You're about to…","Shape","Where"],
@@ -2601,11 +2603,11 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"ul", items:[
         "<strong>Project instructions</strong> apply to every chat in the project and work alongside your account-level preferences. Include context, process, tone and style, and specific requirements — they can automate behaviour ('when I upload a transcript, summarise it with this template').",
         "<strong>Knowledge base</strong> takes PDF, DOCX, CSV, TXT, HTML and linked Google Drive files. <strong>Name files descriptively</strong>: Claude uses filenames and proximity when retrieving.",
-        "<strong>Sharing</strong> on Team/Enterprise: <em>Can view</em> (read and chat), <em>Can edit</em> (modify instructions, knowledge, members), <em>Owner</em> (controls everything)."
+        "<strong>Sharing</strong> on Team/Enterprise: <em>Can view</em> (see contents and chat in the project), <em>Can edit</em> (modify instructions, knowledge, members); the project owner controls everything. Chats inside a shared project stay private unless shared."
        ]},
 
       {t:"h", html:"RAG scaling"},
-      {t:"p", html:"When a knowledge base approaches the context limit, Claude stops trying to hold everything and switches to <strong>searching</strong> project knowledge, retrieving the relevant chunks. This gives <strong>up to 10x capacity</strong>, with a visual indicator in the product. It is also why file naming and document hygiene matter more, not less, at scale."},
+      {t:"p", html:"When a knowledge base approaches the context limit, Claude stops trying to hold everything and switches to <strong>searching</strong> project knowledge, retrieving the relevant chunks. This gives <strong>up to 10x capacity on paid plans</strong>, with a visual indicator in the product. It is also why file naming and document hygiene matter more, not less, at scale."},
       {t:"callout", variant:"warn", title:"Stale documents, stale answers",
        body:"A knowledge base is not an archive. Keeping outdated policies alongside current ones means Claude may retrieve the wrong version and sound equally confident. Remove superseded documents."},
 
@@ -2622,7 +2624,7 @@ window.CA.courses = (window.CA.courses || []).concat([
       "A Project has its own memory, history, knowledge base and instructions.",
       "The project description is invisible to Claude; instructions are not.",
       "Knowledge base is facts; instructions are behaviour.",
-      "Near the limit, Projects switch to RAG search — up to 10x capacity.",
+      "Near the limit, Projects switch to RAG search — up to 10x capacity (paid plans).",
       "Descriptive filenames and current documents are retrieval features, not admin chores."
     ]
   },
@@ -2651,8 +2653,8 @@ window.CA.courses = (window.CA.courses || []).concat([
         ["Best for","Living drafts, dashboards, designs, prototypes","Documents that must leave Claude and be circulated"],
         ["Editing","Edit directly, comment for Claude, or just ask","Edit in the target application"]
        ]},
-      {t:"callout", variant:"warn", title:"A chart from a connector is a snapshot",
-       body:"If an artifact pulls data from a connected source, it is a picture of that moment — not a live feed. Ask Claude to refresh it."},
+      {t:"callout", variant:"warn", title:"A chart in a Doc from a connector is a snapshot",
+       body:"In Claude Docs, a chart built from connector data is a picture of that moment — not a live feed. Ask Claude to refresh it. (Some other artifacts, like dashboards, can pull live data from connected apps using each viewer's own access.) Artifacts need <strong>code execution and file creation</strong> turned on."},
 
       {t:"h", html:"Sharing"},
       {t:"ul", items:[
@@ -2680,7 +2682,7 @@ window.CA.courses = (window.CA.courses || []).concat([
       "Enterprise artifact sharing needs an Owner to enable external links.",
       "Skills are dynamically loaded folders; they need code execution enabled.",
       "Projects = what (knowledge); Skills = how (procedure).",
-      "Connector-fed artifacts are snapshots, not live feeds."
+      "Connector charts in a Doc are snapshots — ask Claude to refresh them."
     ]
   },
 
@@ -3378,7 +3380,7 @@ window.CA.cards = [
 {c:"c3",t:"Discernment",q:"Name the three possible outcomes of an evaluation.",a:"Ready to use · Needs revision · Needs human override."},
 {c:"c3",t:"Discernment",q:"How can an output be 100% accurate and still fail?",a:"Completeness. It may omit the single most important factor — e.g. the competitor the client cares about — while every statement is correct."},
 
-{c:"c3",t:"Failure patterns",q:"Name the four output failure patterns.",a:"Hallucination, inconsistency, bias, completeness failure."},
+{c:"c3",t:"Failure patterns",q:"Name the official output failure patterns.",a:"Hallucination (plausible-but-unsupported claims, fabricated specifics, confident tone masking uncertainty), internal contradictions, confirmation bias, completeness failure, capability hallucination."},
 {c:"c3",t:"Failure patterns",q:"What one fact makes hallucination hard to spot?",a:"Claude writes with the same fluency whether it is right or wrong — confidence is a property of the prose, not evidence of accuracy."},
 {c:"c3",t:"Failure patterns",q:"How do you detect inconsistencies in a long document?",a:"Ask Claude to summarise its key claims as a numbered list, then check whether any two conflict."},
 {c:"c3",t:"Failure patterns",q:"How do you counter confirmation bias in output?",a:"Ask for arguments for and against, or ask Claude to challenge its own recommendation before finalising. Strongly suggestive prompts push the model toward the implied answer."},
@@ -3394,7 +3396,7 @@ window.CA.cards = [
 {c:"c3",t:"Grounding",q:"Why is asking Claude to verify its own output not verification?",a:"It has the same information and blind spots as the process that produced the answer. Verification requires an independent source."},
 
 {c:"c3",t:"Human review",q:"Name the four risk thresholds.",a:"Stakes · Reversibility · Audience · Regulatory exposure."},
-{c:"c3",t:"Human review",q:"Which outputs never go out without human validation?",a:"Final client deliverables, business-critical financial calculations, regulated/sensitive information, public statements, legal communications."},
+{c:"c3",t:"Human review",q:"Which outputs never go out without human validation?",a:"Official list: final client deliverables; audit-critical or financially material calculations; regulated, confidential or highly sensitive data; public or legal communications with lasting consequences. Decide it in advance."},
 {c:"c3",t:"Human review",q:"Where does accountability sit?",a:"With the professional who approves and distributes. No prompt, grounding technique or model selection moves it."},
 {c:"c3",t:"Human review",q:"What do tools do to risk?",a:"Reduce it. They do not eliminate the need for human judgement on high-stakes work."},
 
@@ -3423,7 +3425,7 @@ window.CA.cards = [
 {c:"c4",t:"Solution design",q:"Describe the iterative design cycle.",a:"Generate ideas → prototype → feedback → refine → repeat until it meets the requirement, all inside a Project so context and decisions persist."},
 {c:"c4",t:"Solution design",q:"What is the precondition for a usable dashboard Artifact?",a:"Machine-readable data — a CSV or a table. A screenshot or a chart embedded in a PDF is the most common first-attempt failure."},
 {c:"c4",t:"Solution design",q:"How should you phrase a refinement to a prototype?",a:"Describe the required change, not the code — tell Claude what you need, not how to build it."},
-{c:"c4",t:"Solution design",q:"What are the limits of an Artifact?",a:"It is client-side, on data supplied in the conversation. No live data source, no refresh — a snapshot tool, not a reporting system."},
+{c:"c4",t:"Solution design",q:"What are the limits of an Artifact?",a:"It is a deliverable, not a production system. Built from data you supply (and, today, optionally live data from connected apps via each viewer's access). Once others depend on it, escalate to Developer/Architect expertise."},
 {c:"c4",t:"Solution design",q:"What is the warning sign that you must escalate?",a:"Dependency — when others rely on it as infrastructure. Then reliability, security, integrations and governance require real engineering."},
 
 {c:"c4",t:"Delegation",q:"Name the three delegation assignments.",a:"AI-appropriate (Claude performs), collaborative (Claude assists, a person reviews and decides), human-retained (a person must own it)."},
@@ -3441,7 +3443,7 @@ window.CA.cards = [
 /* ---------- Course 5 ---------- */
 {c:"c5",t:"Surfaces",q:"Name the four in-project mechanisms and what each holds.",a:"Instructions = behaviour; knowledge base = facts; Skills = procedures; scoped memory = continuity. (Connectors are the fifth surface, at account level.)"},
 {c:"c5",t:"Surfaces",q:"What single question routes information to the right surface?",a:"Is this behaviour, knowledge, a procedure, or continuity?"},
-{c:"c5",t:"Surfaces",q:"What is the precedence rule between account and project instructions?",a:"Inside a Project, project-level instructions take precedence over conflicting account-level preferences."},
+{c:"c5",t:"Surfaces",q:"How do the instruction levels fit together?",a:"Personal instructions (Settings > Your Claude) apply to all your chats. Project instructions apply only inside that Project and work alongside them. Organisation instructions, set by Owners, take precedence over individual instructions when they conflict."},
 {c:"c5",t:"Surfaces",q:"How does the knowledge base actually work?",a:"Claude searches and retrieves relevant excerpts — it does not load the whole KB into context every turn. That is why over-uploading causes partial recall."},
 {c:"c5",t:"Surfaces",q:"What gets wrongly blamed for partial recall from a bloated KB?",a:"The prompt. Over-uploading degrades retrieval, and the symptom looks like bad prompting."},
 {c:"c5",t:"Surfaces",q:"Where do Skills live and who can see them?",a:"At account level, reusable across multiple Projects, subject to scope and admin settings — a managed workspace may not see them until an admin enables them."},
@@ -3461,14 +3463,14 @@ window.CA.cards = [
 {c:"c5",t:"Maintenance",q:"Quality degraded gradually in a working Project. What do you check first?",a:"Configuration drift: stale instructions, duplicate documents, outdated memory. Not the prompt."},
 {c:"c5",t:"Maintenance",q:"What must you check before troubleshooting a prompt that uses a Skill?",a:"Whether the Skill itself is current. It is one of the most overlooked diagnostic steps."},
 {c:"c5",t:"Maintenance",q:"What does the official course say about maintaining Memory?",a:"Review it periodically and edit/delete stale entries; export it as a backup before a major change; do a full reset if outdated context would mislead. Accuracy beats volume."},
-{c:"c5",t:"Maintenance",q:"Three hard limits of configuration.",a:"It does not guarantee accuracy (verification still needed); it is not secure storage (no secrets, credentials or regulated personal data); it does not grant autonomous action."},
+{c:"c5",t:"Maintenance",q:"Three hard limits of configuration.",a:"It does not guarantee accuracy (verification still needed); it is not secure storage (no secrets, credentials or regulated personal data); it does not authorise Claude to act on its own (anything unattended, like a scheduled task, is set up deliberately and reviewed)."},
 
 /* ---------- Course 6 ---------- */
 {c:"c6",t:"Use cases",q:"Name the four use-case evaluation criteria (Course 6).",a:"Reversibility · Consequence of error · Need for human creativity or empathy · Accountability."},
 {c:"c6",t:"Use cases",q:"Which criterion can override all the others?",a:"The need for human creativity or empathy. A condolence message may be low-risk and reversible, but the human element is the whole point."},
 {c:"c6",t:"Use cases",q:"Name the three use-case classifications.",a:"Fully appropriate · Appropriate with human review · Inappropriate."},
 {c:"c6",t:"Use cases",q:"What distinguishes 'inappropriate' from 'needs more review'?",a:"Inappropriate means the decision itself cannot be delegated at all, regardless of AI quality — final medical or legal determinations, benefits eligibility. High-risk work that remains permissible with a human decision is 'appropriate with human review'."},
-{c:"c6",t:"Use cases",q:"Five elements of a valid review gate.",a:"Who reviews (named role); what is reviewed; when (before use); how it is evidenced (sign-off, ticket, version note); what happens on rejection (escalate, rework, abandon)."},
+{c:"c6",t:"Use cases",q:"What must a defined review gate state?",a:"Official core: who reviews (the accountable role), what they check, and when (before use) — 'the gate is the classification'. Good practice adds how it is evidenced (sign-off, ticket) and what happens on rejection (escalate, rework, abandon)."},
 {c:"c6",t:"Use cases",q:"Why is a gate without a rejection path not a control?",a:"If nothing can happen when the reviewer says no, and no outcome is recorded, the gate cannot be tested in an audit. It is a formality."},
 
 {c:"c6",t:"Skill trust",q:"What is a Skill, structurally?",a:"A package of instructions plus optional files and scripts. The instructions enter the model's context as trusted guidance; bundled code runs in the code execution environment."},
@@ -3580,7 +3582,7 @@ window.CA.quiz = [
 /* ---- C3 L4 ---- */
 {c:"c3",l:"c3l4",q:"A compliance summary for a regulator reads beautifully. What is the next step?",opts:["Send it — quality is high","Have a qualified human reviewer approve it before release","Run it through a second model","Add more citations and send"],a:1,why:"Regulatory exposure is a threshold. Regulated artefacts require a qualified human reviewer regardless of how good the prose looks."},
 {c:"c3",l:"c3l4",q:"Which is NOT one of the four risk thresholds?",opts:["Stakes","Reversibility","Audience","Token cost"],a:3,why:"The four are stakes, reversibility, audience and regulatory exposure."},
-{c:"c3",l:"c3l4",q:"Which output never ships without human validation?",opts:["An internal brainstorm note","A draft agenda for a team meeting","A business-critical financial calculation","A personal to-do list"],a:2,why:"Final client deliverables, critical financials, regulated information, public statements and legal communications all require human validation."},
+{c:"c3",l:"c3l4",q:"Which output never ships without human validation?",opts:["An internal brainstorm note","A draft agenda for a team meeting","A business-critical financial calculation","A personal to-do list"],a:2,why:"Official do-not-ship-without-review list: final client deliverables; audit-critical or financially material calculations; regulated, confidential or highly sensitive data; public or legal communications."},
 {c:"c3",l:"c3l4",q:"What does good prompting do to high-stakes risk?",opts:["Eliminates it","Reduces it without eliminating the need for human judgement","Transfers it to the model provider","Has no effect"],a:1,why:"No combination of prompting, grounding, model choice or configuration removes human judgement from high-stakes work."},
 
 /* ---- C3 L5 ---- */
@@ -3619,7 +3621,7 @@ window.CA.quiz = [
 /* ---- C5 L1 ---- */
 {c:"c5",l:"c5l1",q:"“Always cite sources for factual claims” belongs where?",opts:["Knowledge base","Project instructions","Scoped memory","A connector"],a:1,why:"It is behaviour applied to every conversation — project instructions."},
 {c:"c5",l:"c5l1",q:"“Company brand colours and logo guidelines” belong where?",opts:["Project instructions","Knowledge base","Scoped memory","Project instructions and memory"],a:1,why:"Reference facts, reused without re-upload — the knowledge base."},
-{c:"c5",l:"c5l1",q:"Account preferences conflict with project instructions. What applies inside the Project?",opts:["Account preferences","Project instructions","Whichever is newer","Claude asks each time"],a:1,why:"Project-level instructions take precedence inside that Project."},
+{c:"c5",l:"c5l1",q:"An organisation instruction says 'always respond in formal English'; your personal instruction says 'use a casual tone'. What happens?",opts:["Claude uses a casual tone","Claude responds formally — organisation instructions take precedence","Claude asks each time","Claude alternates"],a:1,why:"Anthropic's documentation: when organisation and individual instructions directly conflict, Claude favours the organisation-level instruction. Individual instructions still apply to anything the organisation instructions don't cover."},
 {c:"c5",l:"c5l1",q:"Which statement about scoped memory is correct?",opts:["It is global across all Projects","It is project-scoped, Claude-generated and user-editable","It is a complete and automatic recall of past conversations","It cannot be disabled"],a:1,why:"Memory is project-scoped by design, plan-gated, editable, and explicitly not perfect recall."},
 {c:"c5",l:"c5l1",q:"A knowledge base with 40 documents produces partial recall. Most likely cause?",opts:["The prompt is too short","Over-uploading degrades retrieval","Claude cannot read PDFs","The model is too small"],a:1,why:"Claude retrieves relevant excerpts rather than loading the whole KB. Over-uploading causes partial recall — and is usually blamed on prompting."},
 
@@ -3692,7 +3694,7 @@ window.CA.quiz = [
 
 /* ---------------------------------------------------------------- */
 window.CA.glossary = [
-  {t:"Artifact", d:"A stand-alone, editable output surface inside Claude Chat or a Project — reports, code, documents. Medium reliability; needs human review. Runs client-side on data supplied in the conversation, with no live refresh."},
+  {t:"Artifact", d:"A stand-alone, editable output surface inside Claude Chat or a Project — reports, code, documents. Medium reliability; needs human review. Shared by link; not a production system. Today it can also pull live data from connected apps using each viewer's own access."},
   {t:"Capability hallucination", d:"Claude implying it performed an external action (sent mail, saved a file, notified a colleague) when no tool did. Verify side effects externally."},
   {t:"Code execution", d:"An isolated, session-scoped sandbox with no internet access. Inputs must be uploaded. Highest reliability for numerical work; it does not change data sensitivity."},
   {t:"Configuration drift", d:"Gradual quality decline caused by stale instructions, duplicate or outdated knowledge, misaligned Skills or outdated memory — not by prompting."},
@@ -3709,7 +3711,7 @@ window.CA.glossary = [
   {t:"Knowledge base", d:"Project-level store of facts and reference material. Claude retrieves relevant excerpts rather than loading all of it; duplicate, stale or irrelevant files make it retrieve the wrong thing."},
   {t:"Memory (scoped)", d:"Project-scoped continuity: stakeholder names, decisions, long-running preferences. Plan-gated, user-editable; export as a backup before major changes."},
   {t:"Over-delegation", d:"Giving AI more responsibility than the step's risk profile permits — a good draft is not approval authority."},
-  {t:"Project instructions", d:"Persistent behaviour for all conversations in a Project: tone, format, verification and citation practice. Precedence over account preferences inside that Project."},
+  {t:"Project instructions", d:"Persistent behaviour for all conversations in a Project: tone, format, verification and citation practice. Works alongside your personal instructions; organisation instructions take precedence over individual ones."},
   {t:"Prompt injection", d:"Instructions embedded in content Claude reads (PDF, web page, connector record). Treated as data, never a command; surfaced to a human."},
   {t:"Review gate", d:"A defined control specifying who reviews, what is reviewed, when (before use), how it is evidenced, and what happens on rejection."},
   {t:"Skill", d:"A versioned, account-level package of instructions plus optional files and scripts implementing a repeatable procedure. Treated as software, owned by someone."},
@@ -3787,7 +3789,7 @@ window.CA.examFacts = [
   {c:"m6",l:"m6l3",q:"You need every user to run a compliance-check plugin with no opt-out. Which publish option?",opts:["Available","Installed by default","Required","Private"],a:2,why:"Available is optional. Installed by default can be turned off. Required stays on — the correct choice for compliance."},
   {c:"m6",l:"m6l3",q:"When evaluating a new skill, what is the comparison point?",opts:["Your previous skill version","The same prompt answered without the skill (the baseline)","The best output you have ever seen","A competitor's product"],a:1,why:"The baseline is the same prompt without the skill. Ship when the cases you care about beat it meaningfully and you can name the gaps that remain."},
   {c:"m6",l:"m6l3",q:"Data lives in an internal dashboard with no connector. Best approach?",opts:["Export it manually every week","Claude in Chrome with Cowork — you sign in first","Ask Research to find it","Use Enterprise Search"],a:1,why:"Chrome is the bridge for tools without a connector. It cannot sign in for you; you authenticate once and it works in your session."},
-  {c:"m6",l:"m6l3",q:"A regulated workflow needs a complete audit trail of AI activity. Is Cowork suitable?",opts:["Yes, always","No — Cowork activity is not in audit logs or exports","Yes, if you use Opus","Yes, in Incognito"],a:1,why:"Cowork transcripts are not in audit logs or data exports; the Compliance API returns them only for Enterprise, in beta. Regulated audit-trail work belongs elsewhere."},
+  {c:"m6",l:"m6l3",q:"A regulated workflow needs a complete audit trail of AI activity. Is Cowork suitable?",opts:["Yes, always","No — Cowork activity is not in audit logs or exports","Yes, if you use Opus","Yes, in Incognito"],a:1,why:"Cowork transcripts are not in audit logs or data exports; the Compliance API returns them only for Enterprise, in beta. Regulated audit-trail work belongs elsewhere. (Today, Enterprise's Compliance API captures Cowork sessions, but answer with the course version on the exam.)"},
   {c:"m6",l:"m6l3",q:"Which is the difference between global instructions and project instructions?",opts:["Global is per chat; project is per message","Global applies to every session; project applies within one workstream","They are the same setting","Global only works in Cowork"],a:1,why:"Global instructions are your standing brief across every session. Project instructions scope to one stream of work."},
   {"c":"m3","l":"m3l2","q":"You are about to create a quarterly board deck. Is an Artifact a place to start the work?","opts":["Yes — it is a workspace like a Project","No — an Artifact is an output produced inside Chat or a Project","Only on paid plans","Only if the deck is longer than ten slides"],"a":1,"why":"An Artifact is the shape of the deliverable, not a workspace. You work in Chat or a Project and ask for the artifact to be produced there."},
   {"c":"m3","l":"m3l1","q":"A very long chat stops following an instruction given at the start. What is the official explanation?","opts":["Claude is deliberately ignoring it","Near the context limit, earlier messages were auto-summarised and the instruction lost its detail","The model forgot its training data","The instruction was too vague"],"a":1,"why":"The official course: near the limit, claude.ai auto-summarises earlier messages (paid plans with code execution). Detail compresses, so early instructions lose force. That is not Claude ignoring you — fix it with restart, summarise or persist."},
@@ -4599,8 +4601,8 @@ function viewCheatSheet() {
       <li>Confidence ≠ accuracy. Fluency ≠ truth.</li>
     </ul></div>
 
-    <div class="cheat-box"><h4>4 failure patterns</h4><ul>
-      <li>Hallucination · inconsistency · bias · completeness.</li>
+    <div class="cheat-box"><h4>Failure patterns (official)</h4><ul>
+      <li>Hallucination (unsupported · fabricated specifics · overconfident tone) · contradictions · confirmation bias · completeness · capability hallucination.</li>
       <li>Numbered claim list exposes contradictions.</li>
       <li>Ask for the counter-case to defuse bias.</li>
       <li><strong>Capability hallucination</strong>: verify actions externally.</li>
@@ -4618,7 +4620,7 @@ function viewCheatSheet() {
 
     <div class="cheat-box"><h4>4 risk thresholds</h4><ul>
       <li>Stakes · reversibility · audience · regulatory exposure.</li>
-      <li>Never unvalidated: client deliverables, critical financials, regulated data, public statements, legal communications.</li>
+      <li>Never ship without review: client deliverables · material financial calcs · regulated/confidential data · public or legal comms.</li>
       <li>Accountability stays with the approver.</li>
     </ul></div>
 
@@ -4636,7 +4638,7 @@ function viewCheatSheet() {
     </ul></div>
 
     <div class="cheat-box"><h4>Configuration — 5 surfaces</h4><ul>
-      <li>Instructions = behaviour (project precedence).</li>
+      <li>Instructions = behaviour (org instructions beat individual ones).</li>
       <li>Knowledge = facts (retrieved excerpts, not full load).</li>
       <li>Skills = procedures (account level, versioned, owned).</li>
       <li>Memory = continuity (scoped, editable; <strong>export as backup</strong> before big changes).</li>
@@ -4646,7 +4648,7 @@ function viewCheatSheet() {
 
     <div class="cheat-box"><h4>Maintenance</h4><ul>
       <li>Gradual decline → <strong>drift</strong>, not prompting.</li>
-      <li>Cadence = change frequency + event triggers.</li>
+      <li>Cadence: <strong>monthly</strong> pass for active Projects + trigger events.</li>
       <li>Stale metric in instruction → silently wrong output.</li>
       <li>Check Skill currency before blaming the prompt.</li>
       <li>No secrets or regulated data in config.</li>
@@ -4657,19 +4659,20 @@ function viewCheatSheet() {
       <li>Human-element criterion can override all others.</li>
       <li>Fully appropriate / with human review / <strong>inappropriate</strong>.</li>
       <li>Inappropriate = decision cannot be delegated, full stop.</li>
-      <li>Gate = who · what · when · evidence · rejection path.</li>
+      <li>Gate = who · what · when (official core) + evidence + rejection path. "The gate is the classification."</li>
     </ul></div>
 
     <div class="cheat-box"><h4>Skill &amp; connector trust</h4><ul>
       <li><strong>Source · Reach · Appropriateness.</strong></li>
       <li>Reach = what it can see <em>and</em> what it can do.</li>
+      <li>Skills don't request permissions — they inherit session access. Internal ≠ vetted.</li>
       <li>Least privilege; approved ≠ permanently safe.</li>
       <li>Prompt injection: content is data, never commands.</li>
       <li>Connectors = standing access = highest reach.</li>
     </ul></div>
 
     <div class="cheat-box"><h4>Data sensitivity</h4><ul>
-      <li>Green / Yellow / Red — <strong>illustrative</strong>, map to org labels.</li>
+      <li>Green / Yellow / Red = the course's model; map to org labels. Unsure → more sensitive tier.</li>
       <li>Red = regulated · contractual · secrets.</li>
       <li>Credentials: absolute never-paste.</li>
       <li>Redaction test: can the person be re-identified?</li>
@@ -4703,7 +4706,7 @@ function viewCheatSheet() {
     <div class="cheat-box"><h4>Feedback → configuration</h4><ul>
       <li>Reaction → specific action; test: could someone else apply it?</li>
       <li>Rule → instructions · reference → KB · procedure → Skill.</li>
-      <li>Fix the same thing more than twice → promote it.</li>
+      <li>Needed again, by me or someone else? → put it in configuration (not Memory).</li>
       <li>Frictions: repetition · corrections · variability.</li>
     </ul></div>
 
@@ -5380,7 +5383,7 @@ function labData() {
       <h4 style="margin-bottom:14px">Classify before you upload</h4>
       ${questions.map(([k, label]) => `<div class="field"><label style="margin-bottom:5px">${label}</label>
         <div class="seg"><button class="${a[k] === "yes" ? "on" : ""}" data-act="dataAns" data-k="${k}" data-v="yes">Yes</button><button class="${a[k] === "no" ? "on" : ""}" data-act="dataAns" data-k="${k}" data-v="no">No</button><button class="${!a[k] ? "on" : ""}" data-act="dataAns" data-k="${k}" data-v="">Unsure</button></div></div>`).join("")}
-      <p class="small dim" style="margin:6px 0 0">Green / Yellow / Red is an illustrative model — map it onto your organisation's labels.</p>
+      <p class="small dim" style="margin:6px 0 0">Green / Yellow / Red is the official course's model — map it onto your organisation's labels. Unsure → treat as the more sensitive tier.</p>
     </div>
     <div>
       ${!verdict ? `<div class="card" style="min-height:260px;display:grid;place-items:center;text-align:center;color:var(--faint)"><div><div style="font-size:30px;opacity:.35;margin-bottom:10px">◆</div>Answer the checks to classify.</div></div>` : `<div class="verdict ${verdict.c}" style="margin-top:0"><div class="v-label">Classification</div><div class="v-title">${verdict.t}</div><div class="v-body">${verdict.d}</div></div>`}
