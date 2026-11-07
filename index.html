@@ -4871,17 +4871,32 @@ function quizResults() {
   </div>`;
 }
 
+/* Rotate options so the correct answer is not always in the same position.
+   Balanced across the set: option positions cycle 0,1,2,3, so any four consecutive
+   questions spread the answer evenly. Offset randomises the starting point per run. */
+function presentQuestion(q, i, offset) {
+  var rot = (i + offset) % 4;
+  if (!rot) return q;
+  var opts = q.opts.slice(rot).concat(q.opts.slice(0, rot));
+  var a = (q.a - rot + 4) % 4;
+  return Object.assign({}, q, { opts: opts, a: a });
+}
+
 function quizStart() {
   let pool = quizPool().slice();
   pool = pool.sort(() => Math.random() - 0.5);
   if (ui.quizLen && ui.quizLen < pool.length) pool = pool.slice(0, ui.quizLen);
+  const offset = Math.floor(Math.random() * 4);
+  pool = pool.map((q, i) => presentQuestion(q, i, offset));
   ui.quiz = { pool, idx: 0, answers: pool.map(() => null), done: false };
   render();
 }
 
 /* ---------------- EXAM ---------------- */
 function examStart() {
-  const pool = CA.quiz.slice().sort(() => Math.random() - 0.5).slice(0, Math.min(40, CA.quiz.length));
+  let pool = CA.quiz.slice().sort(() => Math.random() - 0.5).slice(0, Math.min(40, CA.quiz.length));
+  const offset = Math.floor(Math.random() * 4);
+  pool = pool.map((q, i) => presentQuestion(q, i, offset));
   ui.exam = {
     pool, idx: 0, answers: pool.map(() => null), flags: pool.map(() => false),
     done: false, end: Date.now() + 45 * 60 * 1000, timerId: null, started: Date.now()
