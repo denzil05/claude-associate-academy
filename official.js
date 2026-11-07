@@ -350,3 +350,17 @@ window.CA.official.m2l1 = (window.CA.official.m2l1 || []).concat([
   {t:"callout", variant:"now", title:"Today in the product (Nov 2026)",
    body:"<p>For the exam, use the defaults this lesson teaches. In today's product: <strong>Claude in Chrome</strong> is on all paid plans (Pro, Max, Ultra, Team, Enterprise) and on by default for Team and Enterprise, except HIPAA-enabled Enterprise orgs, where an Owner must turn it on. Still not on Free. A new <strong>Ultra</strong> plan sits above Max. Chat and Cowork are merging into one conversation.</p>"}
 ]);
+
+/* More current-product notes found during the full read */
+window.CA.official.m6l2 = (window.CA.official.m6l2 || []).concat([
+  {t:"callout", variant:"now", title:"Today in the product (Nov 2026)",
+   body:"<p>The remote/local split above is the course (and exam) version. Today Cowork runs tasks <strong>in the cloud</strong> on all surfaces, so scheduled tasks run with no device online. A cloud task can still reach local files only while the desktop app is open on that computer — and only if it was started on desktop or is a scheduled task.</p>"}
+]);
+window.CA.official.m6l3 = (window.CA.official.m6l3 || []).concat([
+  {t:"callout", variant:"now", title:"Today in the product (Nov 2026)",
+   body:"<ul><li><strong>Audit trail:</strong> on Enterprise, Cowork sessions run via Claude, Desktop and Mobile are now captured in the <strong>Compliance API</strong> (last 30 days, or your shorter retention period), and Team/Enterprise admins can stream Cowork events through OpenTelemetry. Audit logs themselves still don't contain conversation content. For the exam, keep the course answer: regulated audit-trail work is a reason to pause before using Cowork.</li><li><strong>Global instructions</strong> have been folded into <strong>Instructions for Claude</strong> (Settings > Your Claude) in the new combined chat/Cowork experience.</li><li><strong>Claude for Outlook</strong> is still beta, for Pro, Max, Team and Enterprise, installed separately from Microsoft AppSource.</li></ul>"}
+]);
+window.CA.official.m2l1 = (window.CA.official.m2l1 || []).concat([
+  {t:"callout", variant:"now", title:"Thinking and effort today",
+   body:"<p>The model menu now has an <strong>effort</strong> setting (Low, Medium, High, Extra high, Max). On the newest models (the 5.5 generation and Fable 5.1), thinking is always on and can't be turned off. The exam idea is unchanged: use more reasoning for reasoning-heavy work.</p>"}
+]);
