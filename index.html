@@ -940,33 +940,33 @@ window.CA.courses = (window.CA.courses || []).concat([
 
   {
     id: "c2l1", title: "Anatomy of an Effective Prompt", time: 11,
-    sub: "The six components, and why the first three do most of the work",
+    sub: "The five components, and why Context is the one you will forget",
     objectives: [
-      "Name and order the six components of an effective prompt",
+      "Name and order the five components of an effective prompt",
       "Diagnose which component is missing from a weak prompt",
       "Explain why exact word counts fail while structural limits hold"
     ],
     blocks: [
-      {t:"p", html:"A prompt is not a wish — it is a <strong>brief</strong>. Six components turn a vague instruction into something a skilled colleague could execute without asking follow-up questions. Think of them as a checklist you run when output disappoints, not a ritual you perform every time."},
+      {t:"p", html:"A prompt is not a wish — it is a <strong>brief</strong>. Five components turn a vague instruction into something a skilled colleague could execute without asking follow-up questions. Think of them as a checklist you run when output disappoints, not a ritual you perform every time."},
 
-      {t:"h", html:"The six components"},
+      {t:"h", html:"The five components (the official 'component stack')"},
       {t:"table", head:["#","Component","What it answers","If missing"],
        rows:[
         ["1","<strong>Role</strong>","Who am I? (Financial Analyst, PM, Technical Architect, Policy Reviewer, Content Editor)","Generic vocabulary and depth; no point of view"],
         ["2","<strong>Context</strong>","What do I know? Audience, business situation, prior decisions, supporting docs, objectives","Claude assumes — the single most common cause of generic output"],
-        ["3","<strong>Task</strong>","What should I do? Direct verb: Summarize, Compare, Draft, Extract, Audit","Claude answers a neighbouring question"],
+        ["3","<strong>Task</strong>","What should I do? <strong>One primary verb</strong>, stated clearly: Summarize, Compare, Draft, Identify","Claude answers a neighbouring question"],
         ["4","<strong>Constraints</strong>","Where are the boundaries? Length, tone, include/exclude, formatting rules","Wrong length, wrong register, wrong scope"],
-        ["5","<strong>Output format</strong>","What shape should the answer take? Table, email, exec summary, bullets, 3-paragraph report","Rework; you re-paste the answer into shape yourself"],
-        ["6","<strong>Examples</strong>","What does good look like? 1–2 worked examples (<em>few-shot</em>)","Tone and structure drift"]
+        ["5","<strong>Output format</strong>","What shape should the answer take? Table, email, exec summary, bullets, 3-paragraph report. Stating it up front saves an iteration","Rework; you re-paste the answer into shape yourself"]
        ]},
+      {t:"p", html:"Not every prompt needs all five. A quick question needs a Task and maybe a Constraint. A <strong>client deliverable needs all five</strong>. A useful extra, though not one of the official five, is an <strong>example</strong> of what good looks like (<em>few-shot</em>)."},
 
       {t:"callout", variant:"principle", title:"Why the first three dominate",
        body:"Role, Context and Task answer the three questions any competent professional asks before starting: <em>Who am I? What do I know? What should I do?</em> When they are absent Claude does not stop — it <strong>assumes</strong>. Assumption is the mechanism behind almost every 'generic' output."},
 
       {t:"h", html:"Ranking the components by leverage"},
       {t:"ul", items:[
-        "<strong>Context</strong> is the highest-leverage fix in practice, because it is the thing that only exists in your head. Claude cannot see your meeting, your regulator, or last quarter's decision.",
-        "<strong>Examples (few-shot)</strong> are often the single highest-impact addition. One bullet-style example steers tone and structure more reliably than a paragraph of adjectives like 'professional' or 'engaging'.",
+        "<strong>Context</strong> is the <strong>component most often left out</strong>, and the #1 reason prompts underperform. It only exists in your head: Claude cannot see your meeting, your regulator, or last quarter's decision unless a Connector links it.",
+        "<strong>Examples (few-shot)</strong>, the optional extra, can steer tone and structure more reliably than a paragraph of adjectives like 'professional' or 'engaging'.",
         "<strong>Role</strong> is cheap to add and shapes vocabulary and depth, but it will not rescue missing context.",
         "<strong>Constraints and format</strong> mainly prevent rework — they rarely improve substance."
       ]},
@@ -980,13 +980,13 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"h", html:"Weak vs strong — the same request, twice"},
       {t:"compare",
        weak:"<strong>Prompt:</strong> 'Write a summary of our quarterly operations.'<br><br>No role, no context, no constraints, no format. The output will be a plausible, generic operations summary that could describe any company in any quarter — and you will rewrite all of it.",
-       strong:"<strong>Role:</strong> Operations Analyst.<br><strong>Context:</strong> one-page update for the Regional Director, focused on throughput and cost.<br><strong>Task:</strong> summarise the attached Q3 data, covering only metrics that deviate more than 10% from target.<br><strong>Format:</strong> a headline plus three bullets.<br><br>Same request, five of six components present (no examples needed)."},
+       strong:"<strong>Role:</strong> Operations Analyst.<br><strong>Context:</strong> one-page update for the Regional Director, focused on throughput and cost.<br><strong>Task:</strong> summarise the attached Q3 data, covering only metrics that deviate more than 10% from target.<br><strong>Format:</strong> a headline plus three bullets.<br><br>Same request, four of the five components present (Constraints are folded into the Task)."},
 
       {t:"callout", variant:"warn", title:"The strong prompt has a precondition",
        body:"'Only metrics deviating more than 10% from target' only works if the file is <strong>actually attached</strong> and actually <strong>contains targets</strong>. If it does not, Claude will infer plausible-looking targets or quietly drop the comparison. A precise instruction over missing data produces confident fiction — worse than a vague instruction, because it looks rigorous."},
 
       {t:"h", html:"Diagnosing a disappointing prompt"},
-      {t:"p", html:"Run the six components as a checklist against the prompt you actually sent. Whichever component is absent or thin is your suspect. 'Analyze our sales data' contains a Task and nothing else — no role, no context, no audience, no format — which is why it returns a textbook-shaped answer rather than a decision-shaped one."}
+      {t:"p", html:"Run the five components as a checklist against the prompt you actually sent. Whichever component is absent or thin is your suspect. 'Analyze our sales data' contains a Task and nothing else — no role, no context, no audience, no format — which is why it returns a textbook-shaped answer rather than a decision-shaped one."}
     ],
     keyPoints: [
       "Official five components: Role, Context, Task, Constraints, Output format (examples are a useful extra).",
@@ -1004,7 +1004,7 @@ window.CA.courses = (window.CA.courses || []).concat([
     objectives: [
       "Explain the real rationale for decomposition",
       "Design a multi-step workflow with a review checkpoint after each step",
-      "Avoid the fresh-conversation mistake"
+      "Decide when steps belong in one conversation and when to split them"
     ],
     blocks: [
       {t:"p", html:"Decomposition means splitting a large request into smaller logical steps and running them <strong>one at a time</strong>, reviewing each intermediate result. The reason is not that Claude cannot hold a large request — modern context windows comfortably hold most business documents. The reason is <strong>reviewability and error isolation</strong>."},
@@ -1023,7 +1023,7 @@ window.CA.courses = (window.CA.courses || []).concat([
 
       {t:"h", html:"Three rules"},
       {t:"ul", items:[
-        "<strong>Keep every step in the same conversation.</strong> A fresh chat for step 3 loses the criteria and scores from steps 1 and 2 — and Claude will invent replacements without telling you.",
+        "<strong>Keep dependent steps in the same conversation.</strong> A fresh chat for step 3 loses the criteria and scores from steps 1 and 2 — and Claude will invent replacements without telling you. Use a <strong>separate</strong> conversation only when a step is <strong>independent</strong>, or when the chat is so long that early context is degrading.",
         "<strong>Decompose for reviewability, not for size limits.</strong> The justification is control, not capacity.",
         "<strong>Catch errors early.</strong> A wrong criterion costs one correction; a wrong recommendation costs a meeting."
       ]},
@@ -1079,7 +1079,7 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"h", html:"Knowing when to stop"},
       {t:"p", html:"The goal is a <strong>usable outcome</strong>, not a perfect prompt. Refine only while each turn produces a meaningful improvement. When the last <strong>two</strong> iterations produced only cosmetic changes, stop iterating and do a final manual edit — you are now faster than the model."},
       {t:"callout", variant:"exam", title:"Exam trap",
-       body:"Extended thinking is the first lever for 'lacks depth despite detailed instructions' — before swapping models. Reaching for a bigger model first is the classic wrong answer."}
+       body:"The official rule: if analysis stays shallow on a <strong>fast, lightweight model</strong> even after you add detail, it's the <strong>wrong model</strong> — move up a tier. More detail won't fix it. On a capable model, extended thinking can add depth for multi-step analysis. Either way, fix the <em>cause</em> rather than rewriting the prompt."}
     ],
     keyPoints: [
       "Do not rewrite the whole prompt — fix the specific failing component.",
@@ -1509,23 +1509,22 @@ window.CA.courses = (window.CA.courses || []).concat([
     id: "c4l4", title: "Delegation Mapping", time: 13,
     sub: "The central skill of the whole certification",
     objectives: [
-      "Apply the four delegation criteria to each workflow step",
+      "Apply the three delegation criteria to each workflow step",
       "Assign AI-appropriate, collaborative or human-retained ownership",
       "Recognise the four delegation failure modes"
     ],
     blocks: [
       {t:"p", html:"List every step in the workflow, then decide who owns it. There are three assignments: <strong>AI-appropriate</strong> (Claude performs), <strong>collaborative</strong> (Claude assists, a person reviews and decides), <strong>human-retained</strong> (a person must own it). Evaluate each step <strong>separately</strong> — success at one step says nothing about the next."},
 
-      {t:"h", html:"Four delegation criteria"},
+      {t:"h", html:"Three delegation criteria"},
       {t:"table", head:["Criterion","Question","Examples"],
        rows:[
         ["<strong>Reversibility</strong>","Can it be undone if Claude errs?","Extracting data is easily re-run; sending a report to a client cannot be unsent; a signed contract is legally binding"],
         ["<strong>Stakes</strong>","What is the impact if wrong?","Internal meeting notes are low; financial exposure from a penalty clause is high — human-owned or mandatory review"],
-        ["<strong>Accountability</strong>","Who is ultimately responsible?","Stays with the professional. This usually decides collaborative versus fully AI: Claude prepares, the accountable person approves before it moves"],
-        ["<strong>Data sensitivity</strong>","Is the data cleared for use?","Uploading a client contract or timesheet is itself a delegation decision"]
+        ["<strong>Accountability</strong>","Who is ultimately responsible?","Stays with the professional. This usually decides collaborative versus fully AI: Claude prepares, the accountable person approves before it moves. <strong>Accountability doesn't delegate, even when drafting does.</strong>"]
        ]},
-      {t:"callout", variant:"exam", title:"Data sensitivity is an independent gate",
-       body:"It can block delegation even when the other three criteria are green. Low stakes, fully reversible and clearly owned — but the data is not cleared — and the step is still inappropriate. One red gate is enough."},
+      {t:"callout", variant:"exam", title:"One more gate: is the data allowed?",
+       body:"Separately from the three criteria, check whether the data is cleared for use (Green/Yellow/Red, taught in the Governance module). A step can be low-stakes, reversible and clearly owned and still be off-limits if the data isn't cleared."},
 
       {t:"h", html:"Contract review — the canonical mapping"},
       {t:"table", head:["Step","Assignment","Reason"],
@@ -1540,7 +1539,7 @@ window.CA.courses = (window.CA.courses || []).concat([
 
       {t:"h", html:"The four failure modes"},
       {t:"ul", items:[
-        "<strong>Halo delegation.</strong> Delegating the next step because Claude did the previous one well — it extracted clauses perfectly, so surely it can approve changes. Prevention: apply the four criteria to <em>every</em> step. Drafting quality is not decision authority.",
+        "<strong>Halo delegation.</strong> Delegating the next step because Claude did the previous one well — it extracted clauses perfectly, so surely it can approve changes. Prevention: apply the three criteria to <em>every</em> step. Drafting quality is not decision authority.",
         "<strong>Treating collaboration as automation.</strong> 'AI drafts, human reviews' with no person named. Without a named reviewer and a defined meaning of 'review', the human step is fictional. Prevention: name the reviewer, define the checklist, verify reviews happen.",
         "<strong>Mapping the tool instead of the work.</strong> Redesigning the workflow around a feature you like. Correct order: map the work → assess risk per step → choose the delegation model → select the capability.",
         "<strong>Over-delegation.</strong> AI receives more responsibility than its risk profile allows. A good contract draft is not permission to approve clauses, make a legal determination, or send the agreement."
@@ -1582,7 +1581,7 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"table", head:["Step","Assignment"],
        rows:[
         ["Extract receipt details","AI-appropriate — structured extraction, checkable"],
-        ["Check expenses against travel policy","AI-appropriate or collaborative — a Skill applies repeatable rules; exceptions need human interpretation"],
+        ["Check expenses against travel policy","Collaborative — a Skill holds the policy rules and Claude flags; a human confirms edge cases"],
         ["Calculate totals and policy differences","AI-appropriate with code execution"],
         ["Draft explanation of flagged items","Collaborative"],
         ["Approve or reject the report","Human-retained — accountability, affects payment"],
@@ -1762,10 +1761,10 @@ window.CA.courses = (window.CA.courses || []).concat([
         ["<strong>Instructions</strong>","Process changed, reporting requirements evolved, tone standards updated, metrics renamed or retired","Review each cycle; update or remove stale rules. An outdated metric in an instruction produces <strong>silently incorrect output</strong> — the error is in the configuration, not the prompt"],
         ["<strong>Knowledge</strong>","Old documents, duplicate versions, superseded policies","Remove, deduplicate, replace. If you would not trust a colleague to use it, remove it"],
         ["<strong>Skills</strong>","Outdated procedure, wrong formatting, changed requirements, version misaligned with process","Check the Skill is current <strong>before</strong> troubleshooting the prompt — one of the most overlooked diagnostic steps"],
-        ["<strong>Memory</strong>","Stakeholders left, decisions reversed, preferences changed","View, edit, delete. There is <strong>no backup</strong> — if you need a record outside the product, copy it out manually"]
+        ["<strong>Memory</strong>","Stakeholders left, decisions reversed, preferences changed","Review periodically; edit or delete stale entries. <strong>Export it as a backup before a major change</strong>; do a full reset if outdated context would mislead"]
        ]},
-      {t:"callout", variant:"warn", title:"No backup for memory",
-       body:"Supported actions are <strong>view, edit, delete</strong>. Nothing else. Accuracy matters more than quantity — a small accurate memory beats a large stale one."},
+      {t:"callout", variant:"warn", title:"Memory: accuracy beats volume",
+       body:"Treat Memory like a working file: review, edit, delete. <strong>Export it as a backup</strong> before restructuring a Project, and <strong>reset</strong> it when old context would mislead. A small accurate memory beats a large stale one."},
 
       {t:"h", html:"The drift scenario"},
       {t:"p", html:"A recurring reporting Project starts producing subtle errors. The instructions reference a metric that was renamed eight months ago; the knowledge base holds three versions of the template; memory includes a stakeholder who left the company."},
@@ -1804,7 +1803,7 @@ window.CA.courses = (window.CA.courses || []).concat([
     sub: "Four criteria, three classifications, one real review gate",
     objectives: [
       "Classify a use case as fully appropriate, human-reviewed, or inappropriate",
-      "Apply the four criteria including the human-element override",
+      "Apply the four use-case criteria including the human-element override",
       "Specify what makes a review gate valid"
     ],
     blocks: [
@@ -1818,8 +1817,8 @@ window.CA.courses = (window.CA.courses || []).concat([
         ["<strong>Need for human creativity or empathy</strong>","Does this need judgement, emotional intelligence, personal accountability?","A condolence message may be low-risk and reversible, but empathy and relationship management are the whole point. <strong>This criterion can override all the others.</strong>"],
         ["<strong>Accountability</strong>","Who is responsible?","Stays with the individual and organisation. A qualified reviewer's approval reduces risk; it does not move ownership."]
        ]},
-      {t:"callout", variant:"exam", title:"Course 4 versus Course 6 criteria",
-       body:"Course 4 delegation uses <strong>reversibility, stakes, accountability, data sensitivity</strong>. Course 6 use-case evaluation uses <strong>reversibility, consequence of error, human creativity/empathy, accountability</strong>. The notes describe the Course 6 set as a course construct layered on the delegation competency — do not cite it as official framework terminology."},
+      {t:"callout", variant:"exam", title:"How these relate to the Workflow module",
+       body:"The Workflow module maps individual <em>steps</em> with three criteria: <strong>reversibility, stakes, accountability</strong>. Screening a whole <em>use case</em> here adds <strong>human creativity/empathy</strong>. Both sets are official. The criteria interact; it is not a pass/fail checklist."},
 
       {t:"h", html:"Three classifications"},
       {t:"table", head:["Classification","Profile","Examples","Gate"],
@@ -2036,7 +2035,7 @@ window.CA.courses = (window.CA.courses || []).concat([
     sub: "Five failure patterns — timing is the first clue",
     objectives: [
       "Identify the five failure patterns from their symptoms and timing",
-      "Run the seven-step diagnostic sequence in order",
+      "Run the five-step diagnostic sequence in order, cheapest first",
       "Distinguish ordinary non-determinism from stale configuration"
     ],
     blocks: [
@@ -2048,25 +2047,25 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"table", head:["Pattern","Timing","Symptoms","Cause","Fix"],
        rows:[
         ["<strong>1. Under-specification</strong>","Wrong from the first response","Disappointing, generic, key details missing","Missing context, constraints, audience, output specs","Add the missing information — most common and usually easiest"],
-        ["<strong>2. Context overload</strong>","Starts strong, then degrades","Forgets earlier instructions, formatting drifts, quality declines","Exceeds the context window; earliest turns fall out of scope; instruction-to-content ratio dilutes","Start a fresh conversation, write the summary yourself, reload essential context. <strong>A better prompt will not solve it</strong>"],
-        ["<strong>3. Wrong feature or model</strong>","Specific error, every time","Calculations slightly wrong; analysis shallow despite detailed instructions","Text generation used for arithmetic; lightweight model for complex analysis; no extended thinking for multi-step reasoning","Select the right capability. For 'lacks depth despite detail', <strong>extended thinking is the first lever</strong> — before any model swap"],
+        ["<strong>2. Context overload</strong>","Starts strong, then degrades","Forgets earlier instructions, formatting drifts, quality declines","Near the context limit, earlier messages are auto-summarised and lose detail; instruction-to-content ratio dilutes","Start a fresh conversation, write the summary yourself, reload essential context. <strong>A better prompt will not solve it</strong>"],
+        ["<strong>3. Wrong feature or model</strong>","Specific error, every time","Calculations slightly wrong; analysis shallow despite detailed instructions","Text generation used for arithmetic; lightweight (speed-tier) model for complex analysis","Use the right tool, not more prompting: <strong>code execution</strong> for numbers; <strong>move up a model tier</strong> when analysis stays shallow on a fast model (more detail won't fix it)"],
         ["<strong>4. Stale configuration</strong>","Worked before, not now — consistently","Formatting or knowledge outdated","Drift in instructions, knowledge, Skills, config","Review and update the Project configuration"],
         ["<strong>5. Task-fit mismatch</strong>","Impossible regardless of wording","Asked for a single precise future number, or an action outside tool capability","A mismatch no prompt can fix","<strong>Reframe</strong> — ask for a range, key factors, or scenarios instead of one guaranteed figure"]
        ]},
       {t:"callout", variant:"warn", title:"Do not mistake variance for drift",
        body:"Outputs are non-deterministic. A single weaker run is not evidence of stale configuration. Reserve diagnosis 4 for a <strong>consistent, repeatable</strong> drop — not a one-off. Misdiagnosing ordinary variance sends you rewriting a configuration that was fine."},
 
-      {t:"h", html:"The seven-step diagnostic sequence"},
-      {t:"p", html:"Work in order. Most problems are solved in steps 1–5, and step 7 is a last resort rather than a starting hypothesis."},
+      {t:"h", html:"The five-step diagnostic sequence (cheapest fix first)"},
+      {t:"p", html:"Work in order. Re-reading takes seconds and fixes the most common failure; 'the task doesn't fit' is the most expensive conclusion, so it comes <strong>last</strong>. The common mistake is jumping straight to 'use the most capable model' or 'impossible'."},
       {t:"ol", items:[
-        "<strong>Revisit the prompt.</strong> Missing context? Unclear constraints? Output format specified? Detailed enough?",
-        "<strong>Check conversation length.</strong> Very long? Stopped following earlier instructions? Restart with a concise summary of the work so far. Note: <strong>no summariser silently rewrites history</strong> — nothing prunes the conversation for you.",
-        "<strong>Verify feature and model.</strong> Does it need code execution, a more capable model, extended thinking, or a different capability?",
-        "<strong>Check tools and connectors.</strong> Is the connection still authenticated? Does the permission scope cover the request? Did the file actually parse? Expired authentication, insufficient scopes and failed parses are common real causes.",
-        "<strong>Review configuration.</strong> Instructions current, knowledge up to date, Skills functioning. The most common Skills failure is <strong>not</strong> a broken procedure — it is a vague description, which means the Skill never fires.",
-        "<strong>Verify the output itself.</strong> Claude can be confidently wrong. Ask for sources, cross-check figures against the source document, and with code execution <strong>read the generated code</strong> rather than trusting the number. This is the most consequential failure mode.",
-        "<strong>Re-evaluate the task.</strong> Only after exhausting the earlier steps. Some requests need redefining."
+        "<strong>Re-read the prompt</strong> against the five components. Missing context? Unclear task verb? Constraints or format missing?",
+        "<strong>Check conversation length.</strong> Very long? Stopped following earlier instructions? Early content has been auto-summarised — restart with a summary of the work so far, or persist the rule in a standing instruction.",
+        "<strong>Check feature and model.</strong> Does a calculation need code execution? Is a complex task running on a speed tier? Is a connector still authenticated, and does it have the access the request needs?",
+        "<strong>Check configuration.</strong> Instructions current, knowledge up to date, Skills current (custom Skills only update when re-uploaded). A vague Skill description often means the Skill never fires.",
+        "<strong>Only then, question whether the task fits at all.</strong> If it's an expectation mismatch (e.g. 'predict exact Q3 revenue'), reshape it into a range with stated assumptions."
        ]},
+      {t:"callout", variant:"warn", title:"At every step: check the output itself",
+       body:"Claude can be confidently wrong. Ask for sources, cross-check figures against the source document, and with code execution <strong>read the generated code</strong> rather than trusting the number."},
 
       {t:"h", html:"Five symptoms, five diagnoses"},
       {t:"table", head:["Symptom","Pattern","Fix"],
@@ -2082,7 +2081,7 @@ window.CA.courses = (window.CA.courses || []).concat([
       "Timing is the first diagnostic clue.",
       "Five patterns: under-specification, context overload, wrong feature, stale configuration, task-fit mismatch.",
       "Context overload cannot be fixed by a better prompt — restart with your own summary.",
-      "Extended thinking is the first lever for shallow depth.",
+      "Shallow analysis on a speed-tier model = wrong model → move up a tier.",
       "Vague Skill descriptions cause most 'broken Skill' reports.",
       "Official sequence, cheapest first: spec → context → feature/model → config → task fit (last)."
     ]
@@ -2249,12 +2248,17 @@ window.CA.courses = (window.CA.courses || []).concat([
       {t:"callout", variant:"exam", title:"Likely exam framing",
        body:"Expect scenario questions where the correct answer is 'recognise this is outside your scope and route it appropriately' rather than attempting the technical work."},
       {t:"h", html:"What we know about the exam"},
-      {t:"table", head:["Known","Not known"],
+      {t:"table", head:["Exam fact","Detail"],
        rows:[
-        ["Seven domains with published weights: Output Evaluation 21%, Workflow Integration 16%, Governance 15%, Prompting 14%, Product & Model Selection 12%, Configuration & Knowledge 12%, Troubleshooting 10%","Format and duration"],
-        ["The exam uses the three-tier Haiku / Sonnet / Opus frame","Scoring and pass mark"],
-        ["A new exam guide is due <strong>17 November 2026</strong>","Fee and certification validity"],
-        ["Exam content updates on <strong>7 December 2026</strong>","Continuing learning requirements"]
+        ["Exam","CCAO-F — Claude Certified Associate, Foundations"],
+        ["Format","60 questions, multiple-choice and multiple-response (each item says how many to pick)"],
+        ["Time","120 minutes, proctored online or at a Pearson VUE test centre"],
+        ["Pass mark","720 on a scaled score of 100–1,000"],
+        ["Fee and validity","$99 (100% partner discount at checkout); valid 12 months; renewal free and not proctored"],
+        ["Style","Scenario-based: tests applying the frameworks, not recall"],
+        ["Domain weights","Output Evaluation 21%, Workflow Integration 16%, Governance 15%, Prompting 14%, Product & Model Selection 12%, Configuration & Knowledge 12%, Troubleshooting 10%"],
+        ["Models","The exam uses the three-tier Haiku / Sonnet / Opus frame"],
+        ["Updates","New exam guides on <strong>17 November 2026</strong>; exam content changes from <strong>7 December 2026</strong>"]
        ]},
       {t:"callout", variant:"warn", title:"Date-sensitive material",
        body:"Those two dates matter more than any other fact in this app. If you sit on or after 7 December 2026, compare these notes against the new guide before trusting the detail — including the domain weights."},
@@ -3135,7 +3139,7 @@ window.CA.courses = (window.CA.courses || []).concat([
     sub: "Four traits that shape every session",
     objectives: [
       "Explain why identical prompts can produce different answers",
-      "Describe what happens when a conversation gets too long",
+      "Describe what happens when a conversation gets too long (auto-summarisation)",
       "Recognise where the training cutoff does and does not bind"
     ],
     blocks: [
@@ -3148,15 +3152,13 @@ window.CA.courses = (window.CA.courses || []).concat([
        body:"Claude sounds professional and certain even when it is wrong. It has no internal flag that changes the tone when the content is fabricated. <strong>Verify important facts, numbers and conclusions against a reliable source</strong> — this is one of the most frequently tested points on the exam."},
 
       {t:"h", html:"2 — Context has limits"},
-      {t:"p", html:"Each conversation can hold only so much — the <strong>context window</strong>. When it gets too long, the <strong>oldest messages drop out</strong>, and with them any instruction you gave early."},
-      {t:"callout", variant:"warn", title:"The trap: no automatic summary",
-       body:"Claude does <strong>not</strong> automatically summarise the messages that fall out. There is no quiet process preserving your early instructions in condensed form. Instructions you gave at the start can simply stop working, with no warning and no error."},
-      {t:"p", html:"<em>Example:</em> you said 'always reply in German' at the start of a very long chat, and Claude is now replying in English. Nothing broke — the instruction aged out of the window."},
-      {t:"callout", variant:"tip", title:"A note on the sources",
-       body:"A separate set of notes records that some paid plans compact earlier messages near the limit when code execution is enabled. Where the two disagree, treat <strong>'the oldest messages drop out, no automatic summary'</strong> as the Course 1 answer, and confirm the behaviour on the surface you actually use."},
+      {t:"p", html:"Each conversation can hold only so much — the <strong>context window</strong>. Think of it as a <strong>budget</strong>. As messages and documents pile up, the budget runs out."},
+      {t:"callout", variant:"warn", title:"What happens near the limit: auto-summarisation",
+       body:"Near the limit, claude.ai <strong>automatically summarises earlier messages</strong> (on paid plans with Code Execution turned on). The official term is <strong>auto-summarisation</strong>, also called <strong>compaction</strong>. A summary squeezes out detail, so an instruction from minute 10 can lose its force by minute 90. That is <strong>not Claude ignoring you</strong> — it is the budget at work."},
+      {t:"p", html:"<em>Example:</em> you said 'always reply in German' at the start of a very long chat, and Claude is now replying in English. Nothing broke — the early instruction was compressed and lost its force. The fix is in Lesson 5: restart, summarise, persist."},
 
       {t:"h", html:"3 — Knowledge has a cutoff"},
-      {t:"p", html:"Claude knows its training data only up to a certain date — the <strong>training cutoff</strong>. Anything after it does not exist for the model, and it will not announce the gap unless you ask. <strong>Web search</strong> and <strong>Research</strong> can bring in newer information."},
+      {t:"p", html:"Claude knows its training data only up to a certain date — the <strong>training cutoff</strong>. Anything after it does not exist for the model, and it will not announce the gap unless you ask. Three fixes bring in newer information: <strong>connect a source</strong>, turn on <strong>web search</strong> in the chat, or use <strong>Research</strong>."},
       {t:"callout", variant:"exam", title:"Precise wording",
        body:"The cutoff limits what Claude <em>remembers</em>, not what it can <em>look up</em>. That distinction decides several exam questions: for anything after the cutoff, the remedy is a search or a connected source — not a bigger model or a longer prompt."},
 
@@ -3178,7 +3180,7 @@ window.CA.courses = (window.CA.courses || []).concat([
     sub: "Chat, Project, Artifact, Research — and when a Project is worth it",
     objectives: [
       "Choose the entry point that matches the shape of the work",
-      "Apply the five-condition Project test",
+      "Apply the official 2-of-3 Project test",
       "Explain why an Artifact is an output, not a starting point"
     ],
     blocks: [
@@ -3194,15 +3196,13 @@ window.CA.courses = (window.CA.courses || []).concat([
        body:"It is the <strong>shape of the deliverable</strong>, produced inside a conversation that is already happening. You do not 'work in an Artifact' the way you work in a Project — you ask for one. Expect a question that tests exactly this."},
 
       {t:"h", html:"When is a Project worth the setup?"},
-      {t:"p", html:"When <strong>at least two</strong> of these are true:"},
+      {t:"p", html:"Ask three questions. <strong>Yes to two or more → build the Project.</strong>"},
       {t:"ol", items:[
-        "The task <strong>repeats</strong>.",
-        "The background <strong>stays fairly stable</strong>.",
-        "The output <strong>format stays the same</strong>.",
-        "<strong>Several people</strong> need the same background.",
-        "The <strong>same reference files</strong> are reused across sessions."
+        "Does the task <strong>recur</strong>?",
+        "Is the background context <strong>stable</strong>?",
+        "Is the output <strong>format consistent</strong>?"
        ]},
-      {t:"p", html:"The last two are what make a Project a shared asset rather than a personal shortcut. A weekly status report in the same format, drawing on the same documents, satisfies at least three — build the Project."},
+      {t:"p", html:"A weekly status report in the same format, drawing on the same documents, answers yes to all three — build the Project. A task that recurs with a fixed format but a <em>changing</em> background still gets a Project: two of three hold."},
       {t:"callout", variant:"tip", title:"Recovering the setup cost",
        body:"Project setup is typically repaid within two or three sessions. The tell that you needed one earlier: you are pasting the same background paragraph every week."}
     ],
@@ -3217,22 +3217,22 @@ window.CA.courses = (window.CA.courses || []).concat([
 
   {
     id: "m3l3", title: "Four Capability Layers", time: 11,
-    sub: "Skills, code execution, connectors and memory",
+    sub: "Projects, Skills, Code Execution and Memory — four layers, four jobs",
     objectives: [
-      "Distinguish the capability layers from the place you work",
+      "Name the four layers and the job each one does",
       "State what code execution's 'verified' does and does not mean",
       "Apply the memory rules"
     ],
     blocks: [
-      {t:"callout", variant:"exam", title:"First, a distinction",
-       body:"A Project is a <strong>place to work</strong>, not a capability layer. The layers are what Claude can <em>use</em> while working: <strong>Skills</strong>, <strong>Code Execution</strong>, <strong>Connectors and file uploads</strong>, and <strong>Memory</strong>."},
+      {t:"callout", variant:"exam", title:"Four layers, four jobs",
+       body:"Each layer solves a different problem. They are independent: a one-off question uses none; a recurring analysis may use all four."},
 
-      {t:"table", head:["Layer","What it gives Claude"],
+      {t:"table", head:["Layer","Its job"],
        rows:[
-        ["<strong>Skills</strong>","Instruction sets Claude follows. Some are built in — Excel, Word, PowerPoint, PDF — and organisations can create custom ones"],
-        ["<strong>Code Execution</strong>","Runs code in a sealed sandbox: no internet access, with limits on file size and run time"],
-        ["<strong>Connectors &amp; uploads</strong>","An upload adds information to one chat or Project. A connector links an external system — mail, files, tickets — using the user's own permissions"],
-        ["<strong>Memory</strong>","Remembers information across sessions"]
+        ["<strong>Projects</strong>","Carry <strong>context</strong>: standing instructions plus a knowledge base"],
+        ["<strong>Skills</strong>","Define <strong>procedures</strong> — how a task is done, every time. Built-ins for Excel, Word, PowerPoint, PDF; organisations add custom ones. <strong>Skills live at the account level, not inside a Project</strong>, so Claude can use them in any chat"],
+        ["<strong>Code Execution</strong>","<strong>Verifies computations</strong>: Claude writes and runs code in a sealed sandbox (no internet, file-size and run-time limits)"],
+        ["<strong>Memory</strong>","Keeps <strong>continuity</strong> across sessions"]
        ]},
 
       {t:"h", html:"Code execution — read the caveat"},
@@ -3504,10 +3504,10 @@ window.CA.cards = [
 {c:"c7",t:"Diagnosis",q:"Name the five failure patterns.",a:"Under-specification · Context overload · Wrong feature or model · Stale configuration · Task-fit mismatch."},
 {c:"c7",t:"Diagnosis",q:"Context overload: symptoms, cause, fix.",a:"Started well then degraded; forgets earlier instructions. Cause: conversation exceeds the context window and instruction-to-content ratio dilutes. Fix: fresh conversation, your own summary, reload essential context. A better prompt will not solve it."},
 {c:"c7",t:"Diagnosis",q:"What happens near the context limit in claude.ai (official)?",a:"Earlier messages are auto-summarised (paid plans with code execution). Detail compresses, so early instructions lose force. Fix: restart, summarise, persist."},
-{c:"c7",t:"Diagnosis",q:"Output lacks depth despite detailed instructions. First lever?",a:"Extended thinking — before swapping to a larger model."},
+{c:"c7",t:"Diagnosis",q:"Analysis stays shallow on a fast, lightweight model even after you add detail. Diagnosis and fix?",a:"Wrong model tier (official). Move up to a more capable model — adding more context won't fix it."},
 {c:"c7",t:"Diagnosis",q:"How do you avoid misdiagnosing stale configuration?",a:"Outputs are non-deterministic. Reserve that diagnosis for a consistent, repeatable quality drop, not a single weak run."},
 {c:"c7",t:"Diagnosis",q:"Task-fit mismatch: what is the fix?",a:"Reframe the request — ask for a range, the key factors, or scenarios, instead of a single guaranteed figure."},
-{c:"c7",t:"Diagnosis",q:"Name the seven diagnostic steps in order.",a:"1. Revisit prompt. 2. Check conversation length. 3. Verify feature/model. 4. Check tools and connectors. 5. Review configuration. 6. Verify the output itself. 7. Re-evaluate the task."},
+{c:"c7",t:"Diagnosis",q:"Name the official diagnostic steps in order.",a:"Cheapest first: 1. Re-read the prompt (five components). 2. Check conversation length. 3. Check feature and model. 4. Check configuration. 5. Only then question whether the task fits."},
 {c:"c7",t:"Diagnosis",q:"Which step is the most consequential, and why?",a:"Step 6 — verifying the output itself. Claude can be confidently wrong; read the generated code rather than trusting the printed number."},
 {c:"c7",t:"Diagnosis",q:"Common real causes at the tools-and-connectors step.",a:"Expired authentication, insufficient permission scopes, a file that failed to parse."},
 {c:"c7",t:"Diagnosis",q:"Why do most 'broken Skills' not actually have a broken procedure?",a:"The Skill description is too vague, so the Skill never fires. It is a description problem far more often than a logic problem."},
@@ -3552,7 +3552,7 @@ window.CA.quiz = [
 {c:"c2",l:"c2l3",q:"The output is competent but generic. Which diagnosis is most likely?",opts:["Missing context","Wrong model","Context overload","Task-fit mismatch"],a:0,why:"Generic output is the signature of missing context — Claude assumed the audience, the situation and the purpose."},
 {c:"c2",l:"c2l3",q:"An output cites a plausible-looking statistic. What is the correct first move?",opts:["Ask Claude to double-check its own answer","Ask for the source, supply source material, and instruct it to say when information is absent","Increase the model's capability tier","Rewrite the entire prompt"],a:1,why:"The model filled a gap. Supply the source and restrict the answer to it — asking Claude to verify itself is not verification."},
 {c:"c2",l:"c2l3",q:"When should you stop iterating on a prompt?",opts:["After three iterations, regardless of quality","When the last two iterations produced only cosmetic changes","As soon as the output looks acceptable","When you run out of ideas"],a:1,why:"The goal is a usable outcome, not a perfect prompt. Two consecutive cosmetic-only iterations mean a manual edit is now faster."},
-{c:"c2",l:"c2l3",q:"Analysis is shallow despite a detailed, well-specified prompt. What is the first lever?",opts:["Switch to a more capable model","Enable extended thinking","Add more examples","Increase the word count"],a:1,why:"For 'lacks depth despite detailed instructions', extended thinking is the first lever — before any model swap."},
+{c:"c2",l:"c2l3",q:"Analysis stays shallow on a fast, lightweight model even after you add more detail. What is the official fix?",opts:["Switch to a more capable model","Add even more detail","Run it three times and average","Increase the word count"],a:0,why:"Official: shallow analysis on a speed tier is a wrong-model problem. More detail won't fix it; move up a tier."},
 
 /* ---- C2 L4 ---- */
 {c:"c2",l:"c2l4",q:"You want lower creativity for an analytical task in the Claude app. What do you do?",opts:["Set temperature to 0.2 in settings","Instruct Claude to evaluate strictly against stated criteria and ground every claim in the data","Use a smaller model","Disable web search"],a:1,why:"Temperature is an API parameter and is not exposed in the Claude apps. The prompt-level equivalent is strict evaluation against explicit criteria."},
@@ -3697,12 +3697,12 @@ window.CA.glossary = [
   {t:"Code execution", d:"An isolated, session-scoped sandbox with no internet access. Inputs must be uploaded. Highest reliability for numerical work; it does not change data sensitivity."},
   {t:"Configuration drift", d:"Gradual quality decline caused by stale instructions, duplicate or outdated knowledge, misaligned Skills or outdated memory — not by prompting."},
   {t:"Connector", d:"An account/org-level integration giving Claude access to an external system under the authorising user's own permissions. Highest-reach surface; grants standing access."},
-  {t:"Context overload", d:"The third failure pattern: a conversation long enough that early turns fall out of scope, so instruction adherence dilutes. Fix by restarting with your own summary."},
+  {t:"Context overload", d:"A long conversation near its limit: early content is auto-summarised and loses detail, so instruction adherence dilutes. Fix: restart from a summary, or persist the rule in a standing instruction."},
   {t:"Decomposition", d:"Splitting a task into sequential steps with reviewable artefacts. Justified by reviewability and error isolation, not context limits."},
   {t:"Delegation mapping", d:"Listing every workflow step and assigning it as AI-appropriate, collaborative or human-retained using reversibility, stakes and accountability (official Workflow module)."},
   {t:"Diligence", d:"The competency of knowing when extra verification or human review is required, and taking ownership of the final deliverable."},
   {t:"Discernment", d:"The competency of critically evaluating output against requirements, source material and professional standards."},
-  {t:"Extended thinking", d:"A mode giving the model room to reason before answering. The first lever for 'lacks depth despite detailed instructions'."},
+  {t:"Extended thinking", d:"A mode giving the model room to reason before answering. Helps multi-step analysis on a capable model; if a fast, lightweight model stays shallow, the official fix is a more capable model."},
   {t:"Few-shot", d:"Supplying one or two worked examples of the desired shape and tone. Often the highest-impact single prompt addition."},
   {t:"Halo delegation", d:"Delegating the next step because Claude performed the previous one well. Prevented by applying the four criteria to every step."},
   {t:"Incognito mode", d:"Prevents a session appearing in memory and history. Does not override organisational retention or audit obligations, and does not make data approved."},
@@ -4347,7 +4347,7 @@ function viewLesson(id) {
   <article>${l.blocks.map(renderBlock).join("")}</article>
 
   ${officialBlocks(id).length ? `<section class="official">
-    <div class="official-head"><h3>From the official course</h3><span class="small">Added from the Anthropic Partner Academy (Skilljar) notes — points this lesson missed, plus corrections</span></div>
+    <div class="official-head"><h3>From the official course</h3><span class="small">Extra points from the Anthropic Partner Academy (Skilljar) course</span></div>
     ${officialBlocks(id).map(renderBlock).join("")}
   </section>` : ""}
 
@@ -4545,7 +4545,7 @@ function viewFacts() {
     <div class="cheat-box"><h4>Diagnosis before fix</h4><ul>
       <li>Every performance problem has an identifiable cause.</li>
       <li>Timing is the first clue.</li>
-      <li>Steps 1–5 solve most problems; step 7 is last.</li>
+      <li>Cheapest fix first; task fit is checked last.</li>
       <li>Verification, not re-prompting, catches wrong numbers.</li>
     </ul></div>
     <div class="cheat-box"><h4>The accountability line</h4><ul>
@@ -4695,7 +4695,7 @@ function viewCheatSheet() {
     <div class="cheat-box"><h4>Diagnostic sequence (official, 5 steps)</h4><ul>
       <li>Prompt (5 components) → conversation length → feature/model → configuration → task fit <strong>last</strong>.</li>
       <li>Shallow on a speed tier = wrong model → move up.</li>
-      <li>Extended thinking is the first lever for depth.</li>
+      <li>Task fit is checked <strong>last</strong> — it is the most expensive conclusion.</li>
       <li>Vague Skill description → Skill never fires.</li>
       <li>Read generated code; don't trust the printed number.</li>
     </ul></div>
@@ -5169,7 +5169,7 @@ function labPrompt() {
         </div>
         <div id="pbMissing">${missing.length
           ? `<div class="small dim" style="margin-bottom:10px">Missing:</div><div class="badge-row">${missing.map(m => `<span class="pill rose">${m.label}</span>`).join("")}</div>`
-          : `<div class="pill teal">All six components present</div>`}</div>
+          : `<div class="pill teal">All five components + an example present</div>`}</div>
         <hr class="divider" style="margin:16px 0">
         <div class="small" style="color:var(--muted);margin-bottom:8px">Prompt preview</div>
         <pre id="pbPreview" style="white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;line-height:1.6;background:var(--bg-elev);border:1px solid var(--line);border-radius:10px;padding:14px;color:var(--text-dim);max-height:320px;overflow:auto;margin:0">${esc(promptPreview())}</pre>
@@ -5197,17 +5197,17 @@ function promptVerdict(filled, p) {
   if (!p.role.trim()) m.push("role");
   if (!p.context.trim()) m.push("context");
   if (!p.format.trim()) m.push("format");
-  if (filled === 6) return `<div class="v-label">Audit</div><div class="v-title" style="color:var(--teal)">Complete brief</div><div class="v-body">All six components are present. If the output still disappoints, the problem is probably not specification — check conversation length, feature choice and configuration.</div>`;
+  if (filled === 6) return `<div class="v-label">Audit</div><div class="v-title" style="color:var(--teal)">Complete brief</div><div class="v-body">All five components plus an example are present. If the output still disappoints, the problem is probably not specification — check conversation length, feature choice and configuration.</div>`;
   return `<div class="v-label">Audit</div><div class="v-title" style="color:var(--gold)">${filled} of 6 components</div><div class="v-body">Most likely failure: <strong>${m.includes("context") ? "generic output from missing context" : m.includes("format") ? "rework from unspecified format" : "an assumed answer from a thin brief"}</strong>. Add ${m.slice(0, 2).join(" and ")} first — they carry the most leverage.</div>`;
 }
 
 /* ---- 2. failure triage ---- */
 const TRIAGE = {
   first: { p: "Under-specification", c: "The prompt lacks context, constraints, audience or output specs.", f: "Add the missing information — the most common and usually easiest fix.", s: "Step 1: revisit the prompt.", trap: "Wrong from the first response is almost never a model problem." },
-  degrade: { p: "Context overload", c: "The conversation exceeded the context window; instruction adherence diluted as instruction-to-content ratio fell.", f: "Start a fresh conversation, write the summary yourself, reload essential context. A better prompt will not fix this.", s: "Step 2: check conversation length.", trap: "There is no summariser silently rewriting history." },
-  repeat: { p: "Wrong feature or model", c: "A text-generation call being used for arithmetic, or insufficient reasoning capacity.", f: "Move calculations to code execution. For shallow analysis, extended thinking is the first lever — before any model swap.", s: "Step 3: verify feature and model.", trap: "'Slightly wrong numbers' is a feature problem, not a prompt problem." },
-  before: { p: "Stale configuration", c: "Drift in instructions, knowledge base, Skills or settings.", f: "Review and update the Project configuration. No prompt rewrite needed.", s: "Step 5: review configuration.", trap: "Only diagnose this for a consistent, repeatable drop — not a single weaker run." },
-  impossible: { p: "Task-fit mismatch", c: "The request is beyond what a language model can reliably deliver.", f: "Reframe: ask for a range, the key factors, or scenarios instead of one guaranteed figure.", s: "Step 7: re-evaluate the task — last resort.", trap: "No wording makes a single precise future number reliable." }
+  degrade: { p: "Context overload", c: "The conversation exceeded the context window; instruction adherence diluted as instruction-to-content ratio fell.", f: "Start a fresh conversation, write the summary yourself, reload essential context. A better prompt will not fix this.", s: "Step 2: check conversation length.", trap: "Near the limit, earlier messages are auto-summarised — detail is lost, so early instructions fade." },
+  repeat: { p: "Wrong feature or model", c: "A text-generation call being used for arithmetic, or insufficient reasoning capacity.", f: "Move calculations to code execution. Shallow analysis on a fast, lightweight model → move up a model tier.", s: "Step 3: verify feature and model.", trap: "'Slightly wrong numbers' is a feature problem, not a prompt problem." },
+  before: { p: "Stale configuration", c: "Drift in instructions, knowledge base, Skills or settings.", f: "Review and update the Project configuration. No prompt rewrite needed.", s: "Step 4: check configuration.", trap: "Only diagnose this for a consistent, repeatable drop — not a single weaker run." },
+  impossible: { p: "Task-fit mismatch", c: "The request is beyond what a language model can reliably deliver.", f: "Reframe: ask for a range, the key factors, or scenarios instead of one guaranteed figure.", s: "Step 5: question task fit — last resort.", trap: "No wording makes a single precise future number reliable." }
 };
 
 function labTriage() {
@@ -5540,7 +5540,7 @@ function bindLab() {
         const missing = comps.filter(k => !(p[k] || "").trim());
         miss.innerHTML = missing.length
           ? `<div class="small dim" style="margin-bottom:10px">Missing:</div><div class="badge-row">${missing.map(m => `<span class="pill rose">${labels[m]}</span>`).join("")}</div>`
-          : `<div class="pill teal">All six components present</div>`;
+          : `<div class="pill teal">All five components + an example present</div>`;
       }
     });
   });
